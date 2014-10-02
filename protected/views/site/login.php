@@ -50,6 +50,6 @@ $this->breadcrumbs = array(
 
         <?php $this->endWidget(); ?>
         <script>
-            $("#right").kendoComboBox();
+            $("#cbright").kendoComboBox();
         </script>
     </div>
