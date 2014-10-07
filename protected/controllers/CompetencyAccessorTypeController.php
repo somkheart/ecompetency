@@ -1,6 +1,6 @@
 <?php
 
-class DepartmentController extends Controller
+class CompetencyAccessorTypeController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -11,7 +11,6 @@ class DepartmentController extends Controller
 	/**
 	 * @return array action filters
 	 */
-        /*
 	public function filters()
 	{
 		return array(
@@ -25,7 +24,6 @@ class DepartmentController extends Controller
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
-        /*
 	public function accessRules()
 	{
 		return array(
@@ -34,7 +32,7 @@ class DepartmentController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','JsonAll'),
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -46,6 +44,7 @@ class DepartmentController extends Controller
 			),
 		);
 	}
+
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
@@ -56,25 +55,6 @@ class DepartmentController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-        public function actionJsonAll()
-        {
-                $department=Department::model()->findAll();
-                $tmpData=array();
-                $b = array();
-                $index=1;
-                foreach($department as $tmpItem)
-                {
-                    $obj = new stdClass();
-                    $obj->index=$index++;
-                    $obj->department_id=$tmpItem->department_id;
-                    $obj->department_name=$tmpItem->department_name;
-                    $group=Workgroup::model()->findByPk($tmpItem->group_id);
-                    $obj->group_name=$group->group_name;
-                    array_push($b,$obj);
-                }
-                echo json_encode(array("data" => $b));
-            
-        }
 
 	/**
 	 * Creates a new model.
@@ -82,16 +62,16 @@ class DepartmentController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Department;
+		$model=new CompetencyAccessorType;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Department']))
+		if(isset($_POST['CompetencyAccessorType']))
 		{
-			$model->attributes=$_POST['Department'];
+			$model->attributes=$_POST['CompetencyAccessorType'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->department_id));
+				$this->redirect(array('view','id'=>$model->type_id));
 		}
 
 		$this->render('create',array(
@@ -111,11 +91,11 @@ class DepartmentController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Department']))
+		if(isset($_POST['CompetencyAccessorType']))
 		{
-			$model->attributes=$_POST['Department'];
+			$model->attributes=$_POST['CompetencyAccessorType'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->department_id));
+				$this->redirect(array('view','id'=>$model->type_id));
 		}
 
 		$this->render('update',array(
@@ -142,7 +122,7 @@ class DepartmentController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Department');
+		$dataProvider=new CActiveDataProvider('CompetencyAccessorType');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -153,10 +133,10 @@ class DepartmentController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Department('search');
+		$model=new CompetencyAccessorType('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Department']))
-			$model->attributes=$_GET['Department'];
+		if(isset($_GET['CompetencyAccessorType']))
+			$model->attributes=$_GET['CompetencyAccessorType'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -167,12 +147,12 @@ class DepartmentController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Department the loaded model
+	 * @return CompetencyAccessorType the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Department::model()->findByPk($id);
+		$model=CompetencyAccessorType::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -180,11 +160,11 @@ class DepartmentController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Department $model the model to be validated
+	 * @param CompetencyAccessorType $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='department-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='competency-accessor-type-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

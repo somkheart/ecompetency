@@ -1,4 +1,4 @@
-x<?php
+<?php
 
 /**
  * UserIdentity represents the data needed to identity a user.
@@ -19,7 +19,6 @@ class UserIdentity extends CUserIdentity {
     public function authenticate() {
         //   $username=$_POST['username'];
         $user = User::model()->findByAttributes(array('usercode' => $this->username));
-        print_r($user);
         if ($user === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
         } else if ($user->password !== $this->password) {
@@ -38,7 +37,7 @@ class UserIdentity extends CUserIdentity {
     }
     public function getName()
     {
-         echo $this->_id;
+
           $user = User::model()->findByAttributes(array('usercode' =>$this->_id));
           return "ชื่อ-นามสกุล $user->firstname_th  $user->lastname_th ";
     }

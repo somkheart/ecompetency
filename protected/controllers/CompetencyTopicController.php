@@ -11,6 +11,7 @@ class CompetencyTopicController extends Controller
 	/**
 	 * @return array action filters
 	 */
+        /*
 	public function filters()
 	{
 		return array(
@@ -24,6 +25,7 @@ class CompetencyTopicController extends Controller
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
+        /*
 	public function accessRules()
 	{
 		return array(
@@ -44,30 +46,26 @@ class CompetencyTopicController extends Controller
 			),
 		);
 	}
+         * 
+         */
         public function actionJsonList()
         {
-            $list=  CompetencyTopic::model()->findALL();
-            $b=array();
-            
-            foreach($list as $itemData)
-            {
-                
+            $list = CompetencyTopic::model()->findALL();
+            $b = array();
+            $tmpData = array();
+            $b = array();
+            $index = 1;
+            foreach ($list as $tmpObj) {
+                $obj = new stdClass();
+                $obj->index = $index;
+                $obj->topic_id = $tmpObj->topic_id;
+                $obj->topic_name = $tmpObj->topic_name;
+                $obj->status="Active";
+                $index++;
+                array_push($b, $obj);
             }
-            
-             $tmpData=array();
-                $b = array();
-                $index=1;
-                foreach($position as $tmpUser)
-                {
-                    $obj = new stdClass();
-                    $obj->index=$index++;
-                    $obj->position_code=$tmpUser->position_code;
-                    $obj->position_name=$tmpUser->position_name;
-                    $obj->level=$tmpUser->level;
-                    array_push($b,$obj);
-                }
-                echo json_encode(array("data" => $b));
-        }
+            echo json_encode(array("data" => $b));  
+    }
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed

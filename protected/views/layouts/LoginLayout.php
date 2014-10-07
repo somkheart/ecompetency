@@ -6,9 +6,9 @@ and open the template in the editor.
 -->
 <html>
     <head>
-         <meta charset="UTF-8">
+        <meta charset="UTF-8">
         <title>เข้าสู่ระบบ E-Competency </title>
-               <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/styles/kendo.common.min.css" rel="stylesheet"/>
+        <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/styles/kendo.common.min.css" rel="stylesheet"/>
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/styles/kendo.default.min.css" rel="stylesheet"/>
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/styles/kendo.dataviz.min.css" rel="stylesheet"/>
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/styles/kendo.dataviz.default.min.css" rel="stylesheet"/>
@@ -21,9 +21,9 @@ and open the template in the editor.
         <div id="example">
             <div class="centeredImage"><img src="<?php echo Yii::app()->request->baseUrl; ?>/css/styles/dtiLogo.png" width="150" height="150" ></div>      
             <div id="window">
-            <div>          
-                <?php echo $content; ?>
-            </div>                      
+                <div>          
+                    <?php echo $content; ?>
+                </div>                      
             </div>    
             <script type="text/javascript">
                 function loginClick(e) {
@@ -37,14 +37,14 @@ and open the template in the editor.
                                 user: $("#username").val(),
                                 pwd: $("#password").val()
                             },
-                            success: function(data) {
+                            success: function (data) {
                                 console.log(data);
                                 //history.pushState(null, "page 2", "coreCompetency_admin.php");
-                                if(data.success==1) {
+                                if (data.success == 1) {
                                     window.location = "coreCompetency_admin.php";
                                 } else {
                                     //alert(data.error);
-                                    $("#loginForm").prepend('<span class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" role="alert"><span class="k-icon k-warning"> </span>'+data.error+'</span>');
+                                    $("#loginForm").prepend('<span class="k-widget k-tooltip k-tooltip-validation k-invalid-msg" role="alert"><span class="k-icon k-warning"> </span>' + data.error + '</span>');
                                 }
                             },
                             dataType: 'json'
@@ -58,7 +58,7 @@ and open the template in the editor.
                     $('#loginForm').find("span.k-tooltip-validation").hide();
                 }
 
-                $(document).ready(function() {//javascript start
+                $(document).ready(function () {//javascript start
                     $("#btnLogin").kendoButton({// id is btnLogin
                         click: loginClick //call event onclick
                     });
@@ -67,19 +67,19 @@ and open the template in the editor.
                         click: cancelClick //call event onclick
                     });
                     var loginWindow = $('#window');
-                    if(!loginWindow.data("kendoWindow")) {
+                    if (!loginWindow.data("kendoWindow")) {
                         loginWindow.kendoWindow({
-                           width: "500px",
-                           height: "250px",
-                           title: "เข้าสู่ระบบ E-Competency ",
-                           resizable: false,
-                           pinned: true,
-                           draggable: false,
-                           position :{
+                            width: "500px",
+                            height: "250px",
+                            title: "เข้าสู่ระบบ E-Competency ",
+                            resizable: false,
+                            pinned: true,
+                            draggable: false,
+                            position: {
                                 top: 175,
                                 left: 350
-                           }
-                          
+                            }
+
                         });
                         var dialog = loginWindow.data("kendoWindow");
                         dialog.center();
@@ -95,7 +95,7 @@ and open the template in the editor.
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
-                            parameterMap: function(data, operation) {
+                            parameterMap: function (data, operation) {
                                 //return JSON.stringify({})
                             },
                         },

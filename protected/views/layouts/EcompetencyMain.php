@@ -18,17 +18,17 @@ and open the template in the editor.
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/js/kendo.all.min.js"></script>
     </head>
     <body>
-        
+
         <div id="example">
             <div class="leftImage"><img src="<?php echo Yii::app()->request->baseUrl; ?>/css/styles/header.png" height="110" ></div>
-           <ul id="menu" style="text-align: right;">
+            <ul id="menu">
                 <li style="float:right;">
                     <a href="<?php echo Yii::app()->request->baseUrl; ?>/site/logout">ออกจากระบบ</a>
                 </li>
-                 <li style="float:right;">
-                    นาย สมเกียรติ ไกรสินธุ์ นักวิจัย 2 (ODC2)
+                <li style="float:right;">
+                    เจ้าหน้าที่ AHD : นาย สมเกียรติ ไกรสินธุ์ นักวิจัย 2 (ODC2)
                 </li>
-           </ul>
+            </ul>
             <div id="horizontal" style="height: 500px; width: 100%;" data-role="splitter">
                 <div id="left-pane">
                     <div class="pane-content">
@@ -38,7 +38,7 @@ and open the template in the editor.
                     </div>
 
                 </div> 
-                
+
                 <div id="right-pane">
                     <div class="pane-content">
                         <div id="right-pane">
@@ -60,10 +60,10 @@ and open the template in the editor.
                 </div>
             </div>
             <script>
-            $(document).ready(function() {
-                $("#menu").kendoMenu();
-            });
-           </script>
+                $(document).ready(function () {
+                    $("#menu").kendoMenu();
+                });
+            </script>
             <script>
                 var compentencyName = "";
                 var crudServiceBaseUrl = "";
@@ -75,7 +75,8 @@ and open the template in the editor.
                 {
                     $("#ContentData").hide();
                     $("#centralGrid").hide();
-                    $("#grid").hide();centralGrid
+                    $("#grid").hide();
+                    centralGrid
                     $("#employeeGrid").hide();
                     $("#dtigroup").hide();
                     $("#usergrid").hide();
@@ -174,10 +175,10 @@ and open the template in the editor.
                     employeeGrid.refresh();
 
                 }
-                $(document).ready(function() {
+                $(document).ready(function () {
                     //$("#verticalMenu").kendoMenu({orientation: "vertical" });
 
-                    var serviceRoot = "<?php echo Yii::app()->getBaseUrl(true);?>/dataServing/divisionData.php";
+                    var serviceRoot = "<?php echo Yii::app()->getBaseUrl(true); ?>/dataServing/divisionData.php";
                     homogeneous = new kendo.data.HierarchicalDataSource({
                         transport: {
                             read: {
@@ -193,10 +194,10 @@ and open the template in the editor.
                         }
                     });
 
-//                    $("#treeview-left").kendoTreeView({
-//                        dataSource: homogeneous,
-//                        dataTextField: "division_code"
-//                    });
+    //                    $("#treeview-left").kendoTreeView({
+    //                        dataSource: homogeneous,
+    //                        dataTextField: "division_code"
+    //                    });
                     var inlineDefault = new kendo.data.HierarchicalDataSource({
                         data: [
                             {text: "จัดการ โครงสร้างองค์กร", expanded: true, items: [
@@ -239,11 +240,11 @@ and open the template in the editor.
                         ]
                     });
 
-                     var centralSource = new kendo.data.DataSource({
+                    var centralSource = new kendo.data.DataSource({
                         transport: {
                             read: {
                                 type: "POST",
-                                url: "<?php echo Yii::app()->getBaseUrl(true);?>/index.php/division/centraljson",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/division/centraljson",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
@@ -261,6 +262,31 @@ and open the template in the editor.
                             }
                         }
                     });
+
+
+                    var TopicdataSource = new kendo.data.DataSource({
+                        transport: {
+                            read: {
+                                type: "POST",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/CompetencyTopic/JsonList",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json"
+                            },
+                        },
+                        schema: {
+                            data: "data",
+                            model: {
+                                id: "id",
+                                fields: {
+                                    name: {validation: {required: true}},
+                                    maxvalue: {type: "number", validation: {min: 0, required: true}}
+
+                                }
+
+                            }
+                        }
+                    });
+
                     var dataSource = new kendo.data.DataSource({
                         transport: {
                             read: {
@@ -288,14 +314,14 @@ and open the template in the editor.
                         transport: {
                             read: {
                                 type: "POST",
-                                url: "<?php echo Yii::app()->getBaseUrl(true);?>/index.php/Position/json",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/Position/json",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
                             create: {
-                                url: "<?php echo Yii::app()->getBaseUrl(true);?>/index.php/Position/create",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/Position/create",
                                 dataType: "jsonp"
-                           },
+                            },
                         },
                         schema: {
                             data: "data",
@@ -334,6 +360,7 @@ and open the template in the editor.
                     $("#positiongrid").kendoGrid({
                         dataSource: positionSource,
                         pageable: true,
+                        toolbar: ['create'],
                         columns: [
                             {field: "index", title: "ลำดับ", width: "80px"},
                             {field: "position_code", title: "รหัส", width: "150px"},
@@ -344,12 +371,12 @@ and open the template in the editor.
                     });
 
                     $("#competencytopic").kendoGrid({
-                        dataSource: dataSource,
+                        dataSource: TopicdataSource,
                         pageable: true,
                         height: 550,
                         toolbar: ["create"],
                         columns: [
-                            {feild: "index", title: "ลำดับ",width:"80px"},
+                            {field: "index", title: "ลำดับ", width: "80px"},
                             {field: "topic_name", title: "หัวข้อ"},
                             {field: "status", title: "สถานะ", width: "200px"},
                             {command: ["edit", "destroy"], title: "&nbsp;", width: "200px"}],
@@ -388,9 +415,9 @@ and open the template in the editor.
                         dataSource: centralSource,
                         pageable: true,
                         height: 550,
-                        toolbar: ["create"],
+                        // toolbar: ["create"],
                         columns: [
-                            {field: "index", title: "ลำดับ",width:"50px"},
+                            {field: "index", title: "ลำดับ", width: "50px"},
                             {field: "division_name", title: "รายการ"},
                             {command: ["edit", "destroy"], title: "&nbsp;", width: "200px"}
                         ],
@@ -414,7 +441,7 @@ and open the template in the editor.
                         transport: {
                             read: {
                                 type: "POST",
-                                url: "<?php echo Yii::app()->getBaseUrl(true);?>/index.php/User/json",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/User/json",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
@@ -459,7 +486,7 @@ and open the template in the editor.
                         transport: {
                             read: {
                                 type: "POST",
-                                url: "<?php echo Yii::app()->getBaseUrl(true);?>/index.php/Competency/CoreCompetencyJson",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/Competency/CoreCompetencyJson",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
@@ -477,7 +504,7 @@ and open the template in the editor.
                         transport: {
                             read: {
                                 type: "POST",
-                                url: "<?php echo Yii::app()->getBaseUrl(true);?>/index.php/Competency/MangerialCompetencyJson",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/Competency/MangerialCompetencyJson",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
@@ -491,11 +518,11 @@ and open the template in the editor.
                             }
                         }
                     });
-                     var departmentDatasource = new kendo.data.DataSource({
+                    var departmentDatasource = new kendo.data.DataSource({
                         transport: {
                             read: {
                                 type: "POST",
-                                url: "<?php echo Yii::app()->getBaseUrl(true);?>/index.php/department/JsonAll",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/department/JsonAll",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
@@ -509,11 +536,11 @@ and open the template in the editor.
                             }
                         }
                     });
-                     var divisionSource = new kendo.data.DataSource({
+                    var divisionSource = new kendo.data.DataSource({
                         transport: {
                             read: {
                                 type: "POST",
-                                url: "<?php echo Yii::app()->getBaseUrl(true);?>/index.php/division/AllJson",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/division/AllJson",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
@@ -527,7 +554,7 @@ and open the template in the editor.
                             }
                         }
                     });
-                     $("#divisiongrid").kendoGrid({
+                    $("#divisiongrid").kendoGrid({
                         dataSource: divisionSource,
                         pageSize: 20,
                         scrollable: true,
@@ -536,9 +563,9 @@ and open the template in the editor.
                         filterable: {
                             mode: "row"
                         },
-                        toolbar: ["create"],
+                        //   toolbar: ["create"],
                         columns: [
-                            {field: "index", title: "ลำดับ",width:"80px"},
+                            {field: "index", title: "ลำดับ", width: "80px"},
                             {field: "division_name", title: "ส่วนงาน"},
                             {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}
                         ],
@@ -578,12 +605,12 @@ and open the template in the editor.
                         editable: "popup"
                     });
 
-                    
+
                     var functionalSource = new kendo.data.DataSource({
                         transport: {
                             read: {
                                 type: "POST",
-                                url: "<?php echo Yii::app()->getBaseUrl(true);?>/index.php/ComptencyFunctional/JsonList",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/ComptencyFunctional/JsonList",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
@@ -623,20 +650,20 @@ and open the template in the editor.
                         filterable: {
                             mode: "row"
                         },
-                        toolbar: ["create"],
+                        //   toolbar: ["create"],
                         columns: [
-                            {field: "index", title: "ลำดับ",width:"80px"},
+                            {field: "index", title: "ลำดับ", width: "80px"},
                             {field: "group_name", title: "กลุ่มงาน"},
                             {field: "department_name", title: "ฝ่าย"},
                             {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}
                         ],
                         editable: "popup"
                     });
-             
+
                 });
             </script>
         </div>
 
     </body>
 </html>
-            <?php echo "URL".Yii::app()->getBaseUrl(true);?>
+<?php echo "URL" . Yii::app()->getBaseUrl(true); ?>

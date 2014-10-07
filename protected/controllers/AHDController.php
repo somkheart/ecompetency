@@ -6,6 +6,7 @@ class AHDController extends  CAHDController
 	{
 		$this->render('index');
 	}
+        /*
         public function filters()
 	{
 		return array(
@@ -27,6 +28,10 @@ class AHDController extends  CAHDController
 			)
 		);
 	}
+        public function actionChoice()
+        {
+            $this->render('Choice');
+        }
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()

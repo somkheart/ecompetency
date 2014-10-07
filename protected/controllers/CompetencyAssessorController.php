@@ -11,6 +11,7 @@ class CompetencyAssessorController extends Controller
 	/**
 	 * @return array action filters
 	 */
+        /*
 	public function filters()
 	{
 		return array(
@@ -24,6 +25,7 @@ class CompetencyAssessorController extends Controller
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
+        /*
 	public function accessRules()
 	{
 		return array(
@@ -55,7 +57,45 @@ class CompetencyAssessorController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-
+        public function actionJsonUser()
+        {
+            $tmpObjectList=CompetencyAssessor::model()->findAll();
+            $tmpData = array();
+            $b = array();
+            $index=1;
+            foreach ($tmpObjectList as $tmpObject) {
+                $obj = new stdClass();
+                $usercode=$tmpObject->usercode;
+                $obj->usercode = $tmpObject->usercode;
+                $userObj=User::model()->findByAttributes(array('usercode' => $usercode));
+                $obj->fullname="$userObj->firstname_th $userObj->lastname_th ";
+                array_push($b, $obj);
+            }
+             echo json_encode(array("data" => $b));
+        }
+        public function actionJsonList($usercode)
+        {
+            $condition=array("'assessor_user'=>'$usercode'");
+            $tmpObjectList=CompetencyAssessor::model()->findAll();
+            $tmpData = array();
+            $b = array();
+            $index=1;
+            foreach ($tmpObjectList as $tmpObject) {
+                $obj = new stdClass();
+                $obj->topic_id = $tmpObject->topic_id;
+                $obj->usercode = $tmpObject->usercode;
+                $usercode=$tmpObject->usercode;
+                $userObj=User::model()->findByAttributes(array('usercode' => $usercode));
+                $obj->firstname_th="$userObj->firstname_th $userObj->lastname_th ";
+                $obj->assessor_type = $tmpObject->assessor_type;
+                $type_id=$tmpObject->assessor_type;
+                $typeObj=CompetencyAccessorType::model()->findByAttributes(array('type_id' =>$type_id ));
+                $obj->assessor_name = $typeObj->type_name;
+                $obj->index=$index++;
+                array_push($b, $obj);
+            }
+             echo json_encode(array("data" => $b));
+        }
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.

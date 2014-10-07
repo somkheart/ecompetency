@@ -84,7 +84,7 @@ class User extends CActiveRecord
 			'lastLoginTime' => 'Last Login Time',
 		);
 	}
-
+   
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *

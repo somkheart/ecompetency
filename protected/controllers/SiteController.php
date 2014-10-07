@@ -5,6 +5,7 @@ class SiteController extends Controller {
     /**
      * Declares class-based actions.
      */
+    /*
     public function filters() {
         return array(
             'accessControl',
@@ -18,10 +19,10 @@ class SiteController extends Controller {
                 'users' => array('@'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('site', 'login', 'logout'),
+                'actions' => array('site', 'login', 'logout','page'),
                 'users' => array('*'),
             ),
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
+            array('allow', // allow admin user to per   form 'admin' and 'delete' actions
                 'actions' => array('admin', 'delete'),
                 'users' => array('admin'),
             ),
@@ -30,7 +31,7 @@ class SiteController extends Controller {
             ),
         );
     }
-
+    */
     public function actions() {
         return array(
             // captcha action renders the CAPTCHA image displayed on the contact page
@@ -73,6 +74,7 @@ class SiteController extends Controller {
                 $this->render('error', $error);
         }
     }
+
     /**
      * Displays the contact page
      */
@@ -95,37 +97,45 @@ class SiteController extends Controller {
         }
         $this->render('contact', array('model' => $model));
     }
+
     /**
      * Displays the login page
      */
     public function actionLogin() {
         $this->layout = '//layouts/LoginLayout';
         $model = new LoginForm;
-        if(isset($_POST['cbright']))
-        {
-                     $this->redirect($_POST['cbright']);
-                     echo "<script>alert('isset cbright');</script>";
-        }else{
-             echo "<script>alert('error');</script>";
-                   //  $this->redirect("site/error");
-        }
+
         // if it is ajax validation request
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'LoginForm') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
         // collect user input data
-        if (isset($_POST['login-form'])) {
-            $model->attributes = $_POST['login-form'];
+        if (isset($_POST['LoginForm'])) {
+            $model->attributes = $_POST['LoginForm'];
+              $right=$_POST['cbright'];
+              $baseUrl=Yii::app()->request->baseUrl;
+
+              if($right==0)
+              {
+                  $this->redirect("$baseUrl/ahd/index");
+              }if($right==1)
+              {
+                  $this->redirect("$baseUrl/site");
+              }
             // validate user input and redirect to the previous page if valid
+            
+         //echo '<script>alert('.$model->cbright.');</script>';
             if ($model->validate() && $model->login()) {
-                $this->redirect(Yii::app()->user->returnUrl);
+                $this->redirect("$baseUrl/site/");
+               // $this->redirect(Yii::app()->user->returnUrl);
             }
         }
         //$this->redirect("error");
         // display the login form
         $this->render('login', array('model' => $model));
     }
+
     /**
      * Logs out the current user and redirect to homepage.
      */

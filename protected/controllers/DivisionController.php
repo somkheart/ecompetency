@@ -11,6 +11,7 @@ class DivisionController extends Controller
 	/**
 	 * @return array action filters
 	 */
+        /*
 	public function filters()
 	{
 		return array(
@@ -24,6 +25,7 @@ class DivisionController extends Controller
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
+        /*
 	public function accessRules()
 	{
 		return array(
@@ -44,6 +46,8 @@ class DivisionController extends Controller
 			),
 		);
 	}
+         * */
+         
         public function actionAllJson()
         {
                 $div = Division::model()->findAll();
