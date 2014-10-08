@@ -62,3 +62,30 @@ span.k-tooltip {
     background-color: transparent;
     
 }
+
+.box-col{
+    min-width: 400px;
+    width: 400px;
+
+}
+
+#treeview-employee-right,
+#treeview-employee-left
+{
+    float: left;
+    width: 220px;
+    overflow: visible;
+}
+.demo-section-tree-employee{
+    width: 500px;
+    display: inline-block;
+    vertical-align: top;
+
+}
+.demo-section-tree-employee:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: none;
+    visibility: hidden;
+}
