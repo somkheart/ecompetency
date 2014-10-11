@@ -113,7 +113,12 @@ class SiteController extends Controller {
         // collect user input data
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
-              $right=$_POST['cbright'];
+       
+            // validate user input and redirect to the previous page if valid
+            
+         //echo '<script>alert('.$model->cbright.');</script>';
+            if ($model->validate() && $model->login()) {
+             $right=$_POST['cbright'];
               $baseUrl=Yii::app()->request->baseUrl;
 
               if($right==0)
@@ -123,10 +128,6 @@ class SiteController extends Controller {
               {
                   $this->redirect("$baseUrl/site");
               }
-            // validate user input and redirect to the previous page if valid
-            
-         //echo '<script>alert('.$model->cbright.');</script>';
-            if ($model->validate() && $model->login()) {
                 $this->redirect("$baseUrl/site/");
                // $this->redirect(Yii::app()->user->returnUrl);
             }

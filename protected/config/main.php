@@ -32,6 +32,10 @@ return array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
         ),
+        'CUser'=>array(
+            'class'=>'CUser',
+            'User'=>'User'
+        ),
         // uncomment the following to enable URLs in path-format
         'urlManager' => array(
             'urlFormat' => 'path',
@@ -49,10 +53,10 @@ return array(
 
         // uncomment the following to use a MySQL database
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;port=8889;dbname=ecompetency',
+            'connectionString' => 'mysql:host=localhost;dbname=ecompetency',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => 'root',
+            'password' => '',
             'charset' => 'utf8',
         ),
         'errorHandler' => array(

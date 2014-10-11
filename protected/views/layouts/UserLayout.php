@@ -27,7 +27,7 @@ and open the template in the editor.
                     <a href="<?php echo Yii::app()->request->baseUrl; ?>/site/logout">ออกจากระบบ</a>
                 </li>
                 <li style="float:right; width:500px;" onclick="location.href='<?php echo Yii::app()->request->baseUrl; ?>/ahd'">
-                    <b>ผู้ประเมิน :</b>นาย สมเกียรติ ไกรสินธุ์ นักวิจัย 2 (ODC2)
+                    <b>ผู้ประเมิน :</b><?php echo Yii::app()->user->getName(); ?>
                 </li>
             </ul>
             <?php echo $content; ?>

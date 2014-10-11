@@ -22,16 +22,13 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/js/kendo.all.min.js"></script>
     </head>
     <body>
-
         <div id="example">
             <div class="leftImage"><img src="<?php echo Yii::app()->request->baseUrl; ?>/css/styles/header.png" height="110" ></div>
             <ul id="menu">
                 <li style="float:right;">
                     <a href="<?php echo Yii::app()->request->baseUrl; ?>/site/logout">ออกจากระบบ</a>
                 </li>
-                <li style="float:right;">
-                    เจ้าหน้าที่ AHD : นาย สมเกียรติ ไกรสินธุ์ นักวิจัย 2 (ODC2)
-                </li>
+                <li style="width:500px; float:right;">เจ้าหน้าที่ AHD :<?php echo Yii::app()->user->getName(); ?></li>
             </ul>
             <div id="horizontal" style="height: 500px; width: 100%;" data-role="splitter">
                 <div id="left-pane">

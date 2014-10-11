@@ -30,6 +30,7 @@ class UserIdentity extends CUserIdentity {
             $this->errorCode = self::ERROR_NONE;
             $this->_id = $user->usercode;
         }
+        
         return !$this->errorCode;
     }
     public function getId() {
@@ -39,7 +40,8 @@ class UserIdentity extends CUserIdentity {
     {
 
           $user = User::model()->findByAttributes(array('usercode' =>$this->_id));
-          return "ชื่อ-นามสกุล $user->firstname_th  $user->lastname_th ";
+          $fullname=" $user->firstname_th  $user->lastname_th  ($user->position_code)";
+          return trim($fullname);
     }
     public function getPosition()
     {
