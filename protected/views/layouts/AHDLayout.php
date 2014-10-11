@@ -28,7 +28,7 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
                 <li style="float:right;">
                     <a href="<?php echo Yii::app()->request->baseUrl; ?>/site/logout">ออกจากระบบ</a>
                 </li>
-                <li style="width:500px; float:right;">เจ้าหน้าที่ AHD :<?php echo Yii::app()->user->getName(); ?></li>
+                <li style="width:450px;float:right;">เจ้าหน้าที่ AHD :<?php echo Yii::app()->user->getName(); ?></li>
             </ul>
             <div id="horizontal" style="height: 500px; width: 100%;" data-role="splitter">
                 <div id="left-pane">
