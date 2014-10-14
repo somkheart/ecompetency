@@ -5,7 +5,7 @@ class SiteController extends Controller {
     /**
      * Declares class-based actions.
      */
-    /*
+    
     public function filters() {
         return array(
             'accessControl',
@@ -15,7 +15,7 @@ class SiteController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('site', 'page', 'error'),
+            //    'actions' => array('site', 'page', 'error'),
                 'users' => array('@'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -31,7 +31,7 @@ class SiteController extends Controller {
             ),
         );
     }
-    */
+    
     public function actions() {
         return array(
             // captcha action renders the CAPTCHA image displayed on the contact page
@@ -127,8 +127,10 @@ class SiteController extends Controller {
               }if($right==1)
               {
                   $this->redirect("$baseUrl/site");
+              }else if($right==2){
+                  $this->redirect("$baseUrl/admin/");
               }
-                $this->redirect("$baseUrl/site/");
+
                // $this->redirect(Yii::app()->user->returnUrl);
             }
         }
