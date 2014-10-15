@@ -11,7 +11,7 @@ class DivisionController extends Controller
 	/**
 	 * @return array action filters
 	 */
-        /*
+        
 	public function filters()
 	{
 		return array(
@@ -25,13 +25,13 @@ class DivisionController extends Controller
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
-        /*
+        
 	public function accessRules()
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
+				//'actions'=>array('index','view'),
+				'users'=>array('@'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update','AllJson','CentralJson'),
@@ -46,8 +46,7 @@ class DivisionController extends Controller
 			),
 		);
 	}
-         * */
-         
+        
         public function actionAllJson()
         {
                 $div = Division::model()->findAll();
@@ -91,10 +90,10 @@ class DivisionController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView($division_id)
 	{
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$this->loadModel($division_id),
 		));
 	}
 
@@ -126,25 +125,28 @@ class DivisionController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+        public function actionUpdate($division_id,$division_name)
 	{
-		$model=$this->loadModel($id);
+		$model=$this->loadModel($division_id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
+                	$model->attributes=$division_id;
+                        $model->division_id=$division_id;
+                        $model->division_name=$division_name;
+                        $b=array();
+                        if($model->save()){
+                         $obj = new stdClass();
+                         $obj->division_id=$division_id;
+                         $obj->division_name=$division_name;     
+                         array_push($b,$obj);
+                            echo json_encode(array("data" => $b));
+                        }else{
+                             echo json_encode(array("data" => array()));
+                        }
+                        exit();
 
-		if(isset($_POST['Division']))
-		{
-			$model->attributes=$_POST['Division'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->division_id));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
 	}
-
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
