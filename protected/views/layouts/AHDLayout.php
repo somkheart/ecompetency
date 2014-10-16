@@ -28,7 +28,7 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
                 <li style="float:right;">
                     <a href="<?php echo Yii::app()->request->baseUrl; ?>/site/logout">ออกจากระบบ</a>
                 </li>
-                <li style="width:450px;float:right;">เจ้าหน้าที่ AHD :<?php echo Yii::app()->user->getName(); ?></li>
+                <li style="width:450px;float:right;text-align:right;">เจ้าหน้าที่ AHD :<?php echo Yii::app()->user->getName(); ?></li>
             </ul>
             <div id="horizontal" style="height: 500px; width: 100%;" data-role="splitter">
                 <div id="left-pane">
@@ -348,7 +348,12 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
                             destroy: {
                                 url: crudServiceBaseUrl + "/division/Destroy",
                                 dataType: "jsonp"
-                            }                       
+                            },
+                            parameterMap: function(options, operation) {
+                                    if (operation !== "read" && options.models) {
+                                        return {models: kendo.stringify(options.models)};
+                                    }
+                             }
                                      
                         },
                             batch: true,
@@ -391,7 +396,7 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
                         transport: {
                             read: {
                                 type: "POST",
-                                url: crudServiceBaseUrl,
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/workgroup/Json",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
@@ -399,10 +404,10 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
                         schema: {
                             data: "data",
                             model: {
-                                id: "id",
+                                id: "group_id",
                                 fields: {
-                                    name: {validation: {required: true}},
-                                    maxvalue: {type: "number", validation: {min: 0, required: true}}
+                                    group_id: {validation: {required: true}},
+                                    group_name: {type: "string"}
 
                                 }
 
@@ -519,14 +524,11 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
                     $("#dtigroup").kendoGrid({
                         dataSource: dataSource,
                         pageable: true,
-                        // height: 550,
-                        // toolbar: ["create"],
                         columns: [
                             {field: "index", title: "ลำดับ", width: "50px"},
                             {field: "group_name", title: "ชื่อกลุ่มงาน", width: "700px"},
                             {command: ["edit"], title: "&nbsp;", width: "80px"}
                         ],
-                        // editable: "inline",
                         editable: "popup"
                     });
                     var userDataSource = new kendo.data.DataSource({

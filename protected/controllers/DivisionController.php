@@ -128,11 +128,11 @@ class DivisionController extends Controller
         public function actionUpdate()
 	{
             $models=$_GET['models'];
-            print_r($models);
-           $division_id=$models[0];
-           exit();
-           $division_name=$models['2'];
-		$model=$this->loadModel($division_id);
+            $data=json_decode($models);
+            $tmpObject=$data[0];
+            $division_id=$tmpObject->division_id;
+            $division_name=$tmpObject->division_name;
+            $model=$this->loadModel($division_id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
