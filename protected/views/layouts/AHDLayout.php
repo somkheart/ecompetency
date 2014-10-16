@@ -343,18 +343,12 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
                                 dataType: "json"
                             },
                             update: {
-                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/division/Update",
-                                dataType: "jsonp"
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/division/Update",
                             },
                             destroy: {
                                 url: crudServiceBaseUrl + "/division/Destroy",
                                 dataType: "jsonp"
-                            },
-                                    parameterMap: function(options, operation) {
-                                    if (operation !== "read" && options.models) {
-                                        return {models: kendo.stringify(options.models)};
-                                    }
-                                }
+                            }                       
                                      
                         },
                             batch: true,
@@ -364,10 +358,10 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
                             model: {
                                 id: "division_id",
                                 fields: {
+                                    division_id :{type:"string"},
                                     division_name : {type:"string"},
 
                                 }
-
                             }
                         }
                     });

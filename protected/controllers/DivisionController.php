@@ -125,8 +125,13 @@ class DivisionController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-        public function actionUpdate($division_id,$division_name)
+        public function actionUpdate()
 	{
+            $models=$_GET['models'];
+            print_r($models);
+           $division_id=$models[0];
+           exit();
+           $division_name=$models['2'];
 		$model=$this->loadModel($division_id);
 
 		// Uncomment the following line if AJAX validation is needed
@@ -145,6 +150,8 @@ class DivisionController extends Controller
                              echo json_encode(array("data" => array()));
                         }
                         exit();
+       
+
 
 	}
 	/**
