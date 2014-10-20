@@ -8,7 +8,7 @@ class PositionController extends Controller
 	}
         public function actionCreate()
         {
-                
+                $this->render('index');
         }
         public function actionJson()
         {

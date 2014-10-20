@@ -7,6 +7,8 @@ and open the template in the editor.
 <?php
 $baseURL = Yii::app()->getBaseUrl(true);
 $person_url = "$baseURL/CompetencyAssessor/JsonUser";
+$workgroup_read="";
+$workgroup_update="$baseURL/Workgroup/Update";
 ?>
 <html>
     <head>
@@ -17,7 +19,7 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/styles/kendo.dataviz.min.css" rel="stylesheet"/>
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/styles/kendo.dataviz.default.min.css" rel="stylesheet"/>
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/styles/default.css" rel="stylesheet"/>
-        <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/js/jquery.min.js"></script>
+        <script src="<?php echo  Yii::app()->request->baseUrl; ?>/css/kendoUI/js/jquery.min.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/js/angular.min.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/js/kendo.all.min.js"></script>
     </head>
@@ -399,6 +401,9 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
                                 url: "<?php echo Yii::app()->getBaseUrl(true); ?>/workgroup/Json",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
+                            },
+                            update: {
+                                url: <?php echo $workgroup_update; ?>,
                             },
                         },
                         schema: {
@@ -850,4 +855,3 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
 
     </body>
 </html>
-<?php echo "URL" . Yii::app()->getBaseUrl(true); ?>

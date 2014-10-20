@@ -96,13 +96,16 @@ class WorkgroupController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($models) {
+        echo $models;
+        exit();
         $model = $this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
         if (isset($_POST['Workgroup'])) {
+            print_r($_POST['Workgroup']);
             $model->attributes = $_POST['Workgroup'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->group_id));
