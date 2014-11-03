@@ -8,6 +8,7 @@ and open the template in the editor.
 $baseURL = Yii::app()->getBaseUrl(true);
 $person_url = "$baseURL/CompetencyAssessor/JsonUser";
 $workgroup_read="";
+$workgroup_read="$baseURL/Workgroup/Json";
 $workgroup_update="$baseURL/Workgroup/Update";
 ?>
 <html>
@@ -403,7 +404,8 @@ $workgroup_update="$baseURL/Workgroup/Update";
                                 dataType: "json"
                             },
                             update: {
-                                url: <?php echo $workgroup_update; ?>,
+                                url: "<?php echo $workgroup_update; ?>",
+                                dataType: "json"
                             },
                         },
                         schema: {
@@ -411,7 +413,7 @@ $workgroup_update="$baseURL/Workgroup/Update";
                             model: {
                                 id: "group_id",
                                 fields: {
-                                    group_id: {validation: {required: true}},
+                                    group_id:{type:int},
                                     group_name: {type: "string"}
 
                                 }

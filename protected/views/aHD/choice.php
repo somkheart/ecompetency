@@ -81,35 +81,37 @@ $person_url="$baseURL/CompetencyAssessor/JsonUser";
                     width: "35px",
                     field: "0.5",
                     title: "0.5",
-                    template: '<input type="checkbox" name="0.5checkbox" value="enable" />'
+                    template: '<input type="radio" name="0.5checkbox" value="enable" />'
                 },
                 {
                     headerAttributes: {style: "text-align: center;"},
                     width: "35px",
                     field: "1",
                     title: "1",
-                    template: '<input type="checkbox" name="1checkbox" value="enable" />'
+                    template: '<input type="radio" name="1checkbox" value="enable" />'
                 },
                 {
                     headerAttributes: {style: "text-align: center;"},
                     width: "35px",
                     field: "1.5",
                     title: "1.5",
-                    template: '<input type="checkbox" name="1.5checkbox" value="enable" />'
+                    template: '<input type="radio" name="1.5checkbox" value="enable" />'
                 },
                 {
-                    headerAttributes: {style: "text-align: center;"},
+                    headerAttributes: {style: "text-align: center;background: yellow;"},
+                    attributes: {style: "text-align: center; background: yellow"},
                     width: "35px",
                     field: "2",
                     title: "2",
-                    template: '<input type="checkbox" name="2checkbox" value="enable"" />'
+                    template: '<input type="radio" name="2checkbox" value="enable"" />'
                 },
                 {
-                    headerAttributes: {style: "text-align: center;"},
+                    headerAttributes: {style: "text-align: center; background: yellow;"},
+                    attributes: {style: "text-align: center; background: yellow"},
                     width: "35px",
                     field: "2.5",
                     title: "2.5",
-                    template: '<input type="checkbox" name="2.5checkbox" value="enable" />'
+                    template: '<input type="radio" name="2.5checkbox" value="enable" />'
                 },
                 {
                     headerAttributes: {style: "text-align: center; background: yellow"},
@@ -117,35 +119,37 @@ $person_url="$baseURL/CompetencyAssessor/JsonUser";
                     width: "35px",
                     field: "3",
                     title: "3",
-                    template: '<input type="checkbox" name="3checkbox" value="enable" />',
+                    template: '<input type="radio" name="3checkbox" value="enable" />',
                 },
                 {
-                    headerAttributes: {style: "text-align: center;"},
+                    headerAttributes: {style: "text-align: center;background: yellow;"},
+                    attributes: {style: "text-align: center; background: yellow"},
                     width: "35px",
                     field: "3.5",
                     title: "3.5",
-                    template: '<input type="checkbox" name="3.5checkbox"  value="enable" />'
+                    template: '<input type="radio" name="3.5checkbox"  value="enable" />'
                 },
                 {
-                    headerAttributes: {style: "text-align: center;"},
+                    headerAttributes: {style: "text-align: center;background: yellow;"},
+                    attributes: {style: "text-align: center; background: yellow"},
                     width: "35px",
                     field: "4",
                     title: "4",
-                    template: '<input type="checkbox" name="4checkbox" value="enable" />'
+                    template: '<input type="radio" name="4checkbox" value="enable" />'
                 },
                 {
                     headerAttributes: {style: "text-align: center;"},
                     width: "35px",
                     field: "4.5",
                     title: "4.5",
-                    template: '<input type="checkbox" name="4.5checkbox" value="enable" />'
+                    template: '<input type="radio" name="4.5checkbox" value="enable" />'
                 },
                 {
                     headerAttributes: {style: "text-align: center;"},
                     width: "35px",
                     field: "5",
                     title: "5",
-                    template: '<input type="checkbox" name="5checkbox" value="enable" />'
+                    template: '<input type="radio" name="5checkbox" value="enable" />'
                 },
                 {field: "comment", title: "ความเห็นเพิ่มเติม Comments *", width: "320px", headerAttributes: {style: "text-align: center;"}, template: '<input type="text" style="min-width:300px;"/>'}]
 

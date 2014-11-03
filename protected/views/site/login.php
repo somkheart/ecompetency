@@ -8,7 +8,7 @@ $this->breadcrumbs = array(
     'Login',
 );
 ?>
-<h1>เข้าสู่ระบบประเมิน E-Competency </h1>
+<h1></h1>
 <div class="form">
     <?php
     $form = $this->beginWidget('CActiveForm', array(
