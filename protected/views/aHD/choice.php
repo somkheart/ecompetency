@@ -2,12 +2,23 @@
 $baseURL=Yii::app()->getBaseUrl(true);
 $user_id=Yii::app()->user->getId();
 $competency_url="$baseURL/Competency/CoreCompetencyJsonAll";
+$competency_update="$baseURL/Competency/choice/save";
 $person_url="$baseURL/CompetencyAssessor/JsonUser";
+
 ?>
+<form action="<?=$competency_update?>">
 <div id="grid"></div>  
+<span style="text-align:center;">
+    <input id="button" type="submit" value="บันทึก" style="text-align:center"></input>
+<input id="reset" type="reset" value="ยกเลิก"></input>
+</span>
+</form>
  <script>
                 $(document).ready(function () {
                     $("#menu").kendoMenu();
+                });
+                $("#button,#reset").kendoButton({
+                    enable: true
                 });
             </script>
 </div>
