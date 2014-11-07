@@ -413,7 +413,7 @@ $workgroup_update="$baseURL/Workgroup/Update";
                             model: {
                                 id: "group_id",
                                 fields: {
-                                    group_id:{type:int},
+                           
                                     group_name: {type: "string"}
 
                                 }
