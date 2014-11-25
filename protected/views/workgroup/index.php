@@ -1,4 +1,6 @@
+<div></div>
 <?php
+
 /* @var $this WorkgroupController */
 
 $this->breadcrumbs=array(
@@ -11,3 +13,4 @@ $this->breadcrumbs=array(
 	You may change the content of this page by modifying
 	the file <tt><?php echo __FILE__; ?></tt>.
 </p>
+

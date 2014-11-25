@@ -4,8 +4,6 @@ class CompetencyAdminController extends Controller
 {
 	public function actionIndex()
 	{
-                $admin = CompetencyAdmin::model();
-                print_r($admin);
 		$this->render('index');
 	}
 

@@ -2,57 +2,64 @@
 $baseURL=Yii::app()->getBaseUrl(true);
 $user_id=Yii::app()->user->getId();
 ?>
-<div id="grid"></div>
-
-            <script type="text/x-kendo-template" id="template">
+<div id="w">
+              <script type="text/x-kendo-template" id="template">
                 <div class="toolbar">
                 <label class="header-label" style="width:400px;">รายชื่อผู้ที่จะทำการประเมิน</label>
                 </div>
             </script>
-            <script>
-                var selected = "ODC";
-                var grid = $('#grid').data('kendoGrid');
-                $(document).ready(function () {
-                    var employeeSource = new kendo.data.DataSource({
-                        transport: {
-                            read: {
-                                type: "POST",
-                                url: "<?php echo "$baseURL/CompetencyAssessor/JsonList/usercode/$user_id"; ?>",
-                                        contentType: "application/json; charset=utf-8",
-                                dataType: "json"
-                            },
-                        },
-                        schema: {
-                            data: "data",
-                            model: {
-                                id: "id",
-                                fields: {
-                                    name: {validation: {required: true}},
-                                    maxvalue: {type: "number", validation: {min: 0, required: true}}
-                                }
-                            }
-                        }
-                    });
-                    $("#grid").kendoGrid({
-                        dataSource: employeeSource,
-                        toolbar: kendo.template($("#template").html()),
-                        pageable: true,
+      <table id="grid1">
+                <colgroup>
+                    <col style="width:50px;   text-align: center;" />
+                    <col style="width:100px"/>
+                    <col style="width:200px">
+                    <col />
+                    <col style="width:100px"/>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th data-field="make" >ลำดับ</th>
+                        <th data-field="model">รูป</th>
+                        <th data-field="year">เจ้าหน้าที่</th>
+                        <th data-field="category">ผู้ประเมิน</th>
+                        <th data-field="airconditioner">ประเมิน</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php 
+                    $index=1;
+                    foreach($model as $items)
+                         {
+                        $usercode=$items["usercode"];
+                    ?>
+                    <tr>
+                        <td style="text-align: center"><?=$index?></td>
+                        <td><img src="<?php echo $baseURL; ?>/photo/<?=$usercode?>.jpg" width="70px" height="70px"></td>
+                        <td><?=$usercode?> นางสาว ผกามาศ วงค์สาย</td>
+                        <td>เพื่อนรวมงานคนที่ 1 ที่ทำงานร่วมกันเป็นประจำภายในหรือภายนอกหน่วยงานในกลุ่มงานเดียวกัน</td>
+                        <td><a href='<?php echo $baseURL; ?>/ahd/choice/usercode/<?=$usercode?>' >ประเมิน</a></td>
+                    </tr>
+                         <?php
+                                $index++;
+                         }
+                         
+                          ?>
+                </tbody>
+            </table>
+<script>
+                $(document).ready(function() {
+                    $("#grid1").kendoGrid({
                       //  height: 550,
-                        columns: [
-                            {field: "index", title: "ลำดับ", width: "30px"},
-                            {field: "usercode", title: "รหัสเจ้าหน้าที่", width: "50px"},
-                            {field: "firstname_th", title: "ชื่อ", width: "100px"},
-                            {field: "assessor_name", title: "สถานะผู้ประเมิน",width:"400px"},
-                            {field: 'ประเมิน',template:"<a href='<?php echo $baseURL; ?>/ahd/choice/usercode/${usercode}' >ประเมิน</a>",width:"40px"},
-
-
-                        ]
+                        sortable: true,   
+                        pageable: true,
+                       // pagesize:2,
+                        toolbar: kendo.template($("#template").html()),
+            
                     });
-
                 });
-                  
-    
-            </script>
+</script>
+</div>
+
             <script>
                 $(document).ready(function () {
                     $("#menu").kendoMenu();

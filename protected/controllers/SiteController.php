@@ -14,9 +14,24 @@ class SiteController extends Controller {
 
     public function accessRules() {
         return array(
+            array('allow', 
+                'actions'=>array('site','error','login','logout'),
+                'users'=>array('*'),
+            ),
+            array('allow',
+                'actions'=>array('index','page'), // กำหนดสิทธิ์เข้าใช้งาน actionContact
+                'expression'=>'AccessControl::check_access(array(1,2))', // ได้เฉพาะ group 1 และ 2 เท่านั่น
+            ),
+            array('deny',
+                'users'=>array('*'),
+            ),
+        );
+        /*
+        return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
             //    'actions' => array('site', 'page', 'error'),
                 'users' => array('@'),
+                'expression'=>'AccessControl::check_access(array(1,2))', // ได้เฉพาะ group 1 และ 2 เท่านั่น
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('site', 'login', 'logout','page'),
@@ -31,7 +46,9 @@ class SiteController extends Controller {
             ),
         );
     }
-    
+         * 
+         */
+    }
     public function actions() {
         return array(
             // captcha action renders the CAPTCHA image displayed on the contact page

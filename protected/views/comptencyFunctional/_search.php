@@ -26,6 +26,11 @@
 		<?php echo $form->textField($model,'function_status'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->label($model,'function_type'); ?>
+		<?php echo $form->textField($model,'function_type'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>

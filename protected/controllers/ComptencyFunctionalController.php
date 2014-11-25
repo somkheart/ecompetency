@@ -11,6 +11,7 @@ class ComptencyFunctionalController extends Controller
 	/**
 	 * @return array action filters
 	 */
+        /*
 	public function filters()
 	{
 		return array(
@@ -24,11 +25,12 @@ class ComptencyFunctionalController extends Controller
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
+        /*
 	public function accessRules()
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','JsonList'),
+				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -44,20 +46,24 @@ class ComptencyFunctionalController extends Controller
 			),
 		);
 	}
+         * 
+         */
         public function actionJsonList()
         {
-                $competencyFunctional = ComptencyFunctional::model()->findAll();
-                $item = array();
+            $condition = array("condition" => "function_status=1");
+            $functional = ComptencyFunctional::model()->findAll($condition);
+            $tmpData = array();
+            $b = array();
+            $index = 1;
+            foreach ($functional as $tmpItem) {
                 $obj = new stdClass();
-                $b = array();
-                foreach ($competencyFunctional as $item)
-                {
-                    $obj->function_id = $item->function_id;
-                    $obj->function_name = $item->function_name;
-                    $obj->function_status = $item->function_status;
-                    array_push($b, $obj);
-                }
-                echo json_encode(array("data" => $b));
+                $obj->function_id =$tmpItem->function_id;
+                $obj->function_name = $tmpItem->function_name;
+                $obj->function_type = $tmpItem->function_type;
+                $obj->index = $index++;
+                array_push($b, $obj);
+            }
+            echo json_encode(array("data" => $b));
         }
 	/**
 	 * Displays a particular model.
@@ -69,7 +75,7 @@ class ComptencyFunctionalController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-      
+
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
@@ -98,8 +104,9 @@ class ComptencyFunctionalController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+	public function actionUpdate()
 	{
+            $id=1;
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed

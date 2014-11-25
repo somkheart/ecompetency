@@ -10,7 +10,7 @@
  * @property string $firstname_th
  * @property string $lastname_th
  * @property string $nickname
- * @property string $fistname_eng
+ * @property string $firstname_eng
  * @property string $lastname_eng
  * @property string $position_name
  * @property string $tel
@@ -20,6 +20,9 @@
  * @property string $email
  * @property string $password
  * @property string $lastLoginTime
+ * @property integer $department_id
+ * @property integer $division_id
+ * @property integer $group_id
  */
 class User extends CActiveRecord
 {
@@ -39,13 +42,13 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id', 'required'),
-			array('id, usercode, tel1, tel2', 'numerical', 'integerOnly'=>true),
-			array('position_code, firstname_th, lastname_th, nickname, fistname_eng, lastname_eng, position_name, tel, mobile_number, email, password', 'length', 'max'=>255),
+			array('usercode', 'required'),
+			array('id, usercode, tel1, tel2, department_id, division_id, group_id', 'numerical', 'integerOnly'=>true),
+			array('position_code, firstname_th, lastname_th, nickname, firstname_eng, lastname_eng, position_name, tel, mobile_number, email, password', 'length', 'max'=>255),
 			array('lastLoginTime', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, usercode, position_code, firstname_th, lastname_th, nickname, fistname_eng, lastname_eng, position_name, tel, tel1, tel2, mobile_number, email, password, lastLoginTime', 'safe', 'on'=>'search'),
+			array('id, usercode, position_code, firstname_th, lastname_th, nickname, firstname_eng, lastname_eng, position_name, tel, tel1, tel2, mobile_number, email, password, lastLoginTime, department_id, division_id, group_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,7 +75,7 @@ class User extends CActiveRecord
 			'firstname_th' => 'Firstname Th',
 			'lastname_th' => 'Lastname Th',
 			'nickname' => 'Nickname',
-			'fistname_eng' => 'Fistname Eng',
+			'firstname_eng' => 'Firstname Eng',
 			'lastname_eng' => 'Lastname Eng',
 			'position_name' => 'Position Name',
 			'tel' => 'Tel',
@@ -82,9 +85,12 @@ class User extends CActiveRecord
 			'email' => 'Email',
 			'password' => 'Password',
 			'lastLoginTime' => 'Last Login Time',
+			'department_id' => 'Department',
+			'division_id' => 'Division',
+			'group_id' => 'Group',
 		);
 	}
-   
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
@@ -109,7 +115,7 @@ class User extends CActiveRecord
 		$criteria->compare('firstname_th',$this->firstname_th,true);
 		$criteria->compare('lastname_th',$this->lastname_th,true);
 		$criteria->compare('nickname',$this->nickname,true);
-		$criteria->compare('fistname_eng',$this->fistname_eng,true);
+		$criteria->compare('firstname_eng',$this->firstname_eng,true);
 		$criteria->compare('lastname_eng',$this->lastname_eng,true);
 		$criteria->compare('position_name',$this->position_name,true);
 		$criteria->compare('tel',$this->tel,true);
@@ -119,6 +125,9 @@ class User extends CActiveRecord
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('password',$this->password,true);
 		$criteria->compare('lastLoginTime',$this->lastLoginTime,true);
+		$criteria->compare('department_id',$this->department_id);
+		$criteria->compare('division_id',$this->division_id);
+		$criteria->compare('group_id',$this->group_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -135,5 +144,4 @@ class User extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-  
 }

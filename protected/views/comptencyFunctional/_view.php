@@ -17,5 +17,9 @@
 	<?php echo CHtml::encode($data->function_status); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('function_type')); ?>:</b>
+	<?php echo CHtml::encode($data->function_type); ?>
+	<br />
+
 
 </div>

@@ -14,7 +14,7 @@ class WorkgroupController extends Controller {
     public function filters() {
         return array(
             'accessControl', // perform access control for CRUD operations
-            'postOnly + delete', // we only allow deletion via POST request
+                // 'postOnly + delete', // we only allow deletion via POST request
         );
     }
 
@@ -25,19 +25,15 @@ class WorkgroupController extends Controller {
      */
     public function accessRules() {
         return array(
-            array('allow', // allow all users to perform 'index' and 'view' actions
-                
-                'users' => array('@'),
+            array('allow',
+                'actions' => array('site', 'error', 'login', 'logout'),
+                'users' => array('*'),
             ),
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
-                'users' => array('@'),
+            array('allow',
+                'actions' => array('json', 'View', 'Create', 'Update', 'Delete', 'Index', 'Admin'), // กำหนดสิทธิ์เข้าใช้งาน actionContact
+                'expression' => 'AccessControl::check_access(array(1,2))', // ได้เฉพาะ group 1 และ 2 เท่านั่น
             ),
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete'),
-                'users' => array('admin'),
-            ),
-            array('deny', // deny all users
+            array('deny',
                 'users' => array('*'),
             ),
         );
@@ -96,26 +92,73 @@ class WorkgroupController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($group_id,$group_name) {
-       $id=$group_id;
-        $model = $this->loadModel($id);
+    public function actionUpdate() {
+        $models = $_GET['models'];
+        $data = json_decode($models);
+        $tmpObject = $data[0];
+        $group_id = $tmpObject->group_id;
+        $group_name = $tmpObject->group_name;
+        $model = $this->loadModel($group_id);
+        $model->attributes = $group_id;
+        $model->group_id = $group_id;
+        $model->group_name = $group_name;
+        $b = array();
 
+        if ($model->save()) {
+            $obj = new stdClass();
+            $obj->group_id = $group_id;
+            $obj->group_name = $group_name;
+            array_push($b, $obj);
+            echo json_encode(array("data" => $b));
+        } else {
+            echo json_encode(array("data" => array()));
+        }
+        exit();
+        //   $id=1;
+        //  $model = $this->loadModel($id);
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->group_id));
-            /*
-        if (isset($_POST['Workgroup'])) {
-            print_r($_POST['Workgroup']);
-            $model->attributes = $_POST['Workgroup'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->group_id));
-        }
         /*
-        $this->render('update', array(
-            'model' => $model,
-        ));
+          if ($model->save())
+          $this->redirect(array('view', 'id' => $model->group_id));
+          /*
+          if (isset($_POST['Workgroup'])) {
+          print_r($_POST['Workgroup']);
+          $model->attributes = $_POST['Workgroup'];
+          if ($model->save())
+          $this->redirect(array('view', 'id' => $model->group_id));
+          }
+          /*
+          $this->render('update', array(
+          'model' => $model,
+          ));
          * 
+         */
+        /*
+          $models=$_GET['models'];
+          $data=json_decode($models);
+          $tmpObject=$data[0];
+          $division_id=$tmpObject->division_id;
+          $division_name=$tmpObject->division_name;
+          $model=$this->loadModel($division_id);
+
+          // Uncomment the following line if AJAX validation is needed
+          // $this->performAjaxValidation($model);
+          $model->attributes=$division_id;
+          $model->division_id=$division_id;
+          $model->division_name=$division_name;
+          $b=array();
+          if($model->save()){
+          $obj = new stdClass();
+          $obj->division_id=$division_id;
+          $obj->division_name=$division_name;
+          array_push($b,$obj);
+          echo json_encode(array("data" => $b));
+          }else{
+          echo json_encode(array("data" => array()));
+          }
+          exit();
+
          */
     }
 

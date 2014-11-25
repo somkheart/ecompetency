@@ -4,12 +4,23 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<title>ระบบ E-Competency สถาบันเทคโนโลยีป้องกันประเทศ (องค์การมหาชน) กระทรวงกลาโหม </title>
 <?php
 $baseURL = Yii::app()->getBaseUrl(true);
+
 $person_url = "$baseURL/CompetencyAssessor/JsonUser";
-$workgroup_read="";
-$workgroup_read="$baseURL/Workgroup/Json";
-$workgroup_update="$baseURL/Workgroup/Update";
+$workgroup_url = "$baseURL/Workgroup";
+$workgroup_read = "$baseURL/Workgroup/Json";
+$workgroup_update = "$baseURL/Workgroup/Update";
+
+$department_read = "";
+$department_update = "";
+
+$division_read = "";
+$division_update = "";
+
+$position_read = "";
+$position_update = "";
 ?>
 <html>
     <head>
@@ -20,7 +31,7 @@ $workgroup_update="$baseURL/Workgroup/Update";
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/styles/kendo.dataviz.min.css" rel="stylesheet"/>
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/styles/kendo.dataviz.default.min.css" rel="stylesheet"/>
         <link href="<?php echo Yii::app()->request->baseUrl; ?>/css/styles/default.css" rel="stylesheet"/>
-        <script src="<?php echo  Yii::app()->request->baseUrl; ?>/css/kendoUI/js/jquery.min.js"></script>
+        <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/js/jquery.min.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/js/angular.min.js"></script>
         <script src="<?php echo Yii::app()->request->baseUrl; ?>/css/kendoUI/js/kendo.all.min.js"></script>
     </head>
@@ -140,70 +151,56 @@ $workgroup_update="$baseURL/Workgroup/Update";
                     if (selected == "สำนักบริหาร กลาง") {
                         $('#centralGrid').show();
                         $("#centralGrid th[data-field=name]").html("สำนักบริหารกลาง");
-                        // dataSrc.transport.options.read.url = "http://localhost/eCompetency/dataServing/coreCompetenciesData.php";
                     }
                     if (selected == "จัดการกลุ่มงาน") {
                         $('#dtigroup').show();
                         $("#dtigroup th[data-field=name]").html("จัดการกลุ่มงาน");
-                        // dataSrc.transport.options.read.url = "http://localhost/ecompetency/index.php/workgroup/json";
-                        //dataSrc.transport.options.read.url = "http://localhost/eCompetency/dataServing/coreCompetenciesData.php";
                     }
                     if (selected == "จัดการ ฝ่าย") {
                         $('#departmentgrid').show();
                         $("#departmentgrid th[data-field=name]").html("จัดการฝ่าย");
-                        // dataSrc.transport.options.read.url = "http://localhost/eCompetency/dataServing/coreCompetenciesData.php";
                     }
                     if (selected == "จัดการ ส่วนงาน") {
                         $('#divisiongrid').show();
                         $("#divisiongrid th[data-field=name]").html("จัดการส่วนงาน");
-                        //   dataSrc.transport.options.read.url = "http://localhost/ecompetency/index.php/division/AllJson";
                     }
                     if (selected == "จัดการ ตำแหน่ง")
                     {
                         $('#positiongrid').show();
                         $("#positiongrid th[data-field=name]").html("จัดการส่วนงาน");
-                        //  dataSrc.transport.options.read.url = "http://localhost/eCompetency/dataServing/coreCompetenciesData.php";
                     }
                     if (selected == "รายชื่อเจ้าหน้าที่") {
                         $('#usergrid').show();
                         $("#usergrid th[data-field=name]").html(coreCompentency);
-                        // dataSrc.transport.options.read.url = "http://localhost/eCompetency/dataServing/coreCompetenciesData.php";
                     }
                     if (selected == "Core Competencies") {
                         $('#competencygrid').show();
                         $("#competencygrid th[data-field=name]").html(coreCompentency);
-                        //  dataSrc.transport.options.read.url = "http://localhost/eCompetency/dataServing/coreCompetenciesData.php";
                     }
                     else if (selected == "Managerial Competencies") {
                         $('#managerialgrid').show();
                         $("#managerialgrid th[data-field=name]").html(managerialCompentency);
-                        //   dataSrc.transport.options.read.url = "http://localhost/eCompetency/dataServing/managerialCompetenciesData.php";
                     }
                     else if (selected == "Functional Competencies") {
                         $('#functionalgrid').show();
                         $("#functionalgrid th[data-field=name]").html(managerialCompentency);
-                        //    dataSrc.transport.options.read.url = "http://localhost/eCompetency/dataServing/managerialCompetenciesData.php";
                     }
                     else if (selected == "หัวข้อการประเมิน") {
                         $('#competencytopic').show();
                         $("#competencytopic th[data-field=name]").html(managerialCompentency);
-                        //   dataSrc.transport.options.read.url = "http://localhost/eCompetency/dataServing/managerialCompetenciesData.php";
                     }
                     else if (selected == "กำหนดผู้ประเมิน") {
                         $("#grid th[data-field=name]").html(managerialCompentency);
-                        //   dataSrc.transport.options.read.url = "http://localhost/eCompetency/dataServing/managerialCompetenciesData.php";
                         $("#assignCombo").show();
                         $('#split').show();
                     }
                     else if (selected == "AHD") {
                         $('#grid').show();
                         $("#grid th[data-field=name]").html(functionalCompentency);
-                        //  dataSrc.transport.options.read.url = "http://localhost/eCompetency/dataServing/funtionalCompetenciesData.php?function=" + selected;
                     }
                     else if (selected == "ODC") {
                         $('#grid').hide();
                         $('#employeeGrid').show();
-                        //  employeeSrc.transport.options.read.url = "http://localhost/eCompetency/dataServing/employeeData.php?employee_division=" + selected;
                     }
                     else if (selected == "1.Competency Evalution Result") {
                         $("#graphCombo").show();
@@ -348,27 +345,22 @@ $workgroup_update="$baseURL/Workgroup/Update";
                             update: {
                                 url: "<?php echo Yii::app()->getBaseUrl(true); ?>/division/Update",
                             },
-                            destroy: {
-                                url: crudServiceBaseUrl + "/division/Destroy",
-                                dataType: "jsonp"
-                            },
-                            parameterMap: function(options, operation) {
-                                    if (operation !== "read" && options.models) {
-                                        return {models: kendo.stringify(options.models)};
-                                    }
-                             }
-                                     
+                            parameterMap: function (options, operation) {
+                                if (operation !== "read" && options.models) {
+                                    return {models: kendo.stringify(options.models)};
+                                }
+                            }
+
                         },
-                            batch: true,
-                            pageSize: 20,
+                        batch: true,
+                        pageSize: 20,
                         schema: {
                             data: "data",
                             model: {
                                 id: "division_id",
                                 fields: {
-                                    division_id :{type:"string"},
-                                    division_name : {type:"string"},
-
+                                    division_id: {type: "string", editable: false, nullable: false},
+                                    division_name: {type: "string"},
                                 }
                             }
                         }
@@ -389,9 +381,7 @@ $workgroup_update="$baseURL/Workgroup/Update";
                                 fields: {
                                     name: {validation: {required: true}},
                                     maxvalue: {type: "number", validation: {min: 0, required: true}}
-
                                 }
-
                             }
                         }
                     });
@@ -405,19 +395,25 @@ $workgroup_update="$baseURL/Workgroup/Update";
                             },
                             update: {
                                 url: "<?php echo $workgroup_update; ?>",
-                                dataType: "json"
+          
                             },
+                            parameterMap: function (options, operation) {
+                                if (operation !== "read" && options.models) {
+                                    return {models: kendo.stringify(options.models)};
+                                }
+                            }
                         },
+                        batch: true,
+                        pageSize: 20,  
                         schema: {
                             data: "data",
                             model: {
                                 id: "group_id",
                                 fields: {
-                           
+                                    group_id: {type: "string"},
                                     group_name: {type: "string"}
 
                                 }
-
                             }
                         }
                     });
@@ -429,16 +425,30 @@ $workgroup_update="$baseURL/Workgroup/Update";
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
+                            update: {
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/Position/update",
+                                //dataType: "jsonp"
+                            },
                             create: {
                                 url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/Position/create",
                                 dataType: "jsonp"
                             },
+                            parameterMap: function (options, operation) {
+                                if (operation !== "read" && options.models) {
+                                    return {models: kendo.stringify(options.models)};
+                                }
+                            }      
                         },
+                        batch:true,
+                       
                         schema: {
                             data: "data",
                             model: {
-                                id: "id",
+                                id: "position_code",
                                 fields: {
+                                    position_code:{type:"string",editable: false, nullable: true},
+                                    position_name:{type:"string"},
+                                    level:{type:"number",validation: { required: true, min: 1} }
                                 }
                             }
                         }
@@ -459,18 +469,16 @@ $workgroup_update="$baseURL/Workgroup/Update";
                                 fields: {
                                     name: {validation: {required: true}},
                                     maxvalue: {type: "number", validation: {min: 0, required: true}}
-
                                 }
-
                             }
                         }
                     });
                     $("#positiongrid").kendoGrid({
                         dataSource: positionSource,
                         pageable: true,
-                        toolbar: ['create'],
+                      //  toolbar: ['create'],
                         columns: [
-                            {field: "index", title: "ลำดับ", width: "80px"},
+                            //{field: "index", title: "ลำดับ", width: "80px"},
                             {field: "position_code", title: "รหัส", width: "150px"},
                             {field: "position_name", title: "ตำแหน่ง"},
                             {field: "level", title: "ระดับ", width: "100px", attributes: {class: "center"}},
@@ -485,15 +493,15 @@ $workgroup_update="$baseURL/Workgroup/Update";
                         columns: [
                             {field: "index", title: "ลำดับ", width: "80px"},
                             {field: "topic_name", title: "หัวข้อ"},
-                            {field: "status", title: "สถานะ", width: "200px"},
-                            {command: ["edit", "destroy"], title: "&nbsp;", width: "200px"}],
+                            {field: "status", title: "สถานะ", width: "100px"},
+                            {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}],
                         editable: "inline"
                     });
                     $("#grid").kendoGrid({
                         dataSource: dataSource,
                         pageable: true,
                         height: 550,
-                        toolbar: ["create"],
+                      //  toolbar: ["create"],
                         columns: [
                             {feild: "lastname", title: "นามสกุล"},
                             {field: "name", title: compentencyName},
@@ -505,7 +513,7 @@ $workgroup_update="$baseURL/Workgroup/Update";
                         dataSource: employeeSource,
                         pageable: true,
                         height: 550,
-                        toolbar: ["create"],
+                     ///   toolbar: ["create"],
                         columns: [
                             {field: "employee_id", title: "รหัสเจ้าหน้าที่", width: "100px"},
                             {field: "title", title: "คำนำหน้าชื่อ", width: "200px"},
@@ -519,9 +527,9 @@ $workgroup_update="$baseURL/Workgroup/Update";
                     $("#centralGrid").kendoGrid({
                         dataSource: centralSource,
                         pageable: true,
-                        height: 550,
+                     //   height: 550,
                         columns: [
-                           // {field: "index", title: "ลำดับ", width: "50px"},
+                            //  {field: "index", title: "ลำดับ", width: "50px"},
                             {field: "division_name", title: "รายการ"},
                             {command: ["edit"], title: "&nbsp;", width: "100px"}
                         ],
@@ -532,7 +540,6 @@ $workgroup_update="$baseURL/Workgroup/Update";
                         dataSource: dataSource,
                         pageable: true,
                         columns: [
-                            {field: "index", title: "ลำดับ", width: "50px"},
                             {field: "group_name", title: "ชื่อกลุ่มงาน", width: "700px"},
                             {command: ["edit"], title: "&nbsp;", width: "80px"}
                         ],
@@ -546,12 +553,22 @@ $workgroup_update="$baseURL/Workgroup/Update";
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
+                            update : {
+                                 url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/User/update",
+                            },
+                             parameterMap: function (options, operation) {
+                                if (operation !== "read" && options.models) {
+                                    return {models: kendo.stringify(options.models)};
+                                }
+                            }
                         },
+                        batch:true,
                         schema: {
                             data: "data",
                             model: {
+                                id:"usercode",
                                 fields: {
-                                    usercode: {type: "string"},
+                                    usercode: {type: "string",editable: false, nullable: true},
                                     firstname_th: {type: "string"},
                                     lastname_th: {type: "string"},
                                     position_name: {type: "string"},
@@ -572,7 +589,7 @@ $workgroup_update="$baseURL/Workgroup/Update";
                         },
                         toolbar: ["create"],
                         columns: [
-                            {field: "usercode", title: "รหัส", width: "150px"},
+                            {field: "usercode", title: "รหัส", width: "70px"},
                             {field: "firstname_th", title: "ชื่อ", width: "200px"},
                             {field: "lastname_th", title: "นามสกุล", width: "150px"},
                             {field: "position_name", title: "ตำแหน่ง", width: "200px"},
@@ -589,7 +606,12 @@ $workgroup_update="$baseURL/Workgroup/Update";
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
+                            update:{
+                             url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/Competency/update",
+                          }
+                                    
                         },
+                        batch:true,
                         schema: {
                             data: "data",
                             model: {
@@ -626,6 +648,7 @@ $workgroup_update="$baseURL/Workgroup/Update";
                                 dataType: "json"
                             },
                         },
+                        batch:true,
                         schema: {
                             data: "data",
                             model: {
@@ -679,10 +702,10 @@ $workgroup_update="$baseURL/Workgroup/Update";
                         filterable: {
                             mode: "row"
                         },
-                        toolbar: ["create"],
+                      //  toolbar: ["create"],
                         columns: [
                             {field: "competency_name", title: "Core Competency"},
-                            {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}
+                            {command: ["edit"], title: "แก้ไข", width: "100px"}
                         ],
                         editable: "popup"
                     });
@@ -695,10 +718,10 @@ $workgroup_update="$baseURL/Workgroup/Update";
                         filterable: {
                             mode: "row"
                         },
-                        toolbar: ["create"],
+                      //  toolbar: ["create"],
                         columns: [
                             {field: "competency_name", title: "Managerial Competency"},
-                            {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}
+                            {command: ["edit"], title: "&nbsp;", width: "100px"}
                         ],
                         editable: "popup"
                     });

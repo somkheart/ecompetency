@@ -4,7 +4,7 @@
  * This is the model class for table "competency_admin".
  *
  * The followings are the available columns in table 'competency_admin':
- * @property string $username
+ * @property string $usercode
  * @property integer $user_type
  */
 class CompetencyAdmin extends CActiveRecord
@@ -25,12 +25,12 @@ class CompetencyAdmin extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username', 'required'),
+			array('usercode', 'required'),
 			array('user_type', 'numerical', 'integerOnly'=>true),
-			array('username', 'length', 'max'=>100),
+			array('usercode', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('username, user_type', 'safe', 'on'=>'search'),
+			array('usercode, user_type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,7 +51,7 @@ class CompetencyAdmin extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'username' => 'Username',
+			'usercode' => 'Usercode',
 			'user_type' => 'User Type',
 		);
 	}
@@ -74,7 +74,7 @@ class CompetencyAdmin extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('username',$this->username,true);
+		$criteria->compare('usercode',$this->usercode,true);
 		$criteria->compare('user_type',$this->user_type);
 
 		return new CActiveDataProvider($this, array(

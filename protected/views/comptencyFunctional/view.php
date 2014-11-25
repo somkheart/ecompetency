@@ -24,5 +24,6 @@ $this->menu=array(
 		'function_id',
 		'function_name',
 		'function_status',
+		'function_type',
 	),
 )); ?>
