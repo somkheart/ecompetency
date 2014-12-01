@@ -21,6 +21,8 @@ $division_update = "";
 
 $position_read = "";
 $position_update = "";
+
+$functional_url = "$baseURL/ComptencyFunctional/index";
 ?>
 <html>
     <head>
@@ -182,12 +184,14 @@ $position_update = "";
                         $("#managerialgrid th[data-field=name]").html(managerialCompentency);
                     }
                     else if (selected == "Functional Competencies") {
-                        $('#functionalgrid').show();
-                        $("#functionalgrid th[data-field=name]").html(managerialCompentency);
+                        //  $("#usergrid").hide();
+                        //   $('#functionalgrid').show();
+                        //  $("#functionalgrid th[data-field=name]").html(managerialCompentency);
+                        window.location.href = "<?= $functional_url ?>";
                     }
                     else if (selected == "หัวข้อการประเมิน") {
                         $('#competencytopic').show();
-                        $("#competencytopic th[data-field=name]").html(managerialCompentency);
+                        $("#competencytcompetencytopicopic th[data-field=name]").html(managerialCompentency);
                     }
                     else if (selected == "กำหนดผู้ประเมิน") {
                         $("#grid th[data-field=name]").html(managerialCompentency);
@@ -365,26 +369,7 @@ $position_update = "";
                             }
                         }
                     });
-                    var TopicdataSource = new kendo.data.DataSource({
-                        transport: {
-                            read: {
-                                type: "POST",
-                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/CompetencyTopic/JsonList",
-                                contentType: "application/json; charset=utf-8",
-                                dataType: "json"
-                            },
-                        },
-                        schema: {
-                            data: "data",
-                            model: {
-                                id: "id",
-                                fields: {
-                                    name: {validation: {required: true}},
-                                    maxvalue: {type: "number", validation: {min: 0, required: true}}
-                                }
-                            }
-                        }
-                    });
+
                     var dataSource = new kendo.data.DataSource({
                         transport: {
                             read: {
@@ -395,7 +380,6 @@ $position_update = "";
                             },
                             update: {
                                 url: "<?php echo $workgroup_update; ?>",
-          
                             },
                             parameterMap: function (options, operation) {
                                 if (operation !== "read" && options.models) {
@@ -404,7 +388,7 @@ $position_update = "";
                             }
                         },
                         batch: true,
-                        pageSize: 20,  
+                        pageSize: 20,
                         schema: {
                             data: "data",
                             model: {
@@ -437,18 +421,17 @@ $position_update = "";
                                 if (operation !== "read" && options.models) {
                                     return {models: kendo.stringify(options.models)};
                                 }
-                            }      
+                            }
                         },
-                        batch:true,
-                       
+                        batch: true,
                         schema: {
                             data: "data",
                             model: {
                                 id: "position_code",
                                 fields: {
-                                    position_code:{type:"string",editable: false, nullable: true},
-                                    position_name:{type:"string"},
-                                    level:{type:"number",validation: { required: true, min: 1} }
+                                    position_code: {type: "string", editable: false, nullable: true},
+                                    position_name: {type: "string"},
+                                    level: {type: "number", validation: {required: true, min: 1}}
                                 }
                             }
                         }
@@ -476,7 +459,7 @@ $position_update = "";
                     $("#positiongrid").kendoGrid({
                         dataSource: positionSource,
                         pageable: true,
-                      //  toolbar: ['create'],
+                        //  toolbar: ['create'],
                         columns: [
                             //{field: "index", title: "ลำดับ", width: "80px"},
                             {field: "position_code", title: "รหัส", width: "150px"},
@@ -485,23 +468,61 @@ $position_update = "";
                             {command: ["edit", "destroy"], title: "&nbsp;", width: "200px"}],
                         editable: "inline"
                     });
+                    var TopicdataSource = new kendo.data.DataSource({
+                        transport: {
+                            read: {
+                                type: "POST",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/CompetencyTopic/JsonList",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json"
+                            },
+                            create: {
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/CompetencyTopic/create",
+                                dataType: "json"
+                            },
+                            update: {
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/CompetencyTopic/update",
+                                dataType: "json"
+                            },
+                            destroy:{
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/CompetencyTopic/delete",
+                            },
+                            parameterMap: function (options, operation) {
+                                if (operation !== "read" && options.models) {
+                                    return {models: kendo.stringify(options.models)};
+                                }
+                            }
+                        },
+                        batch: true,
+                        schema: {
+                            data: "data",
+                            model: {
+                                id: "topic_id",
+                                fields: {
+                                    topic_id: {type: "string"},
+                                    topic_name: {validation: {required: true}},
+                                }
+                            }
+                        }
+                    });
                     $("#competencytopic").kendoGrid({
                         dataSource: TopicdataSource,
                         pageable: true,
-                        height: 550,
+                        // height: 550,
                         toolbar: ["create"],
                         columns: [
-                            {field: "index", title: "ลำดับ", width: "80px"},
+                            //  {field: "index", title: "ลำดับ", width: "80px",editable: false, nullable: tru},
                             {field: "topic_name", title: "หัวข้อ"},
-                            {field: "status", title: "สถานะ", width: "100px"},
+                            //   {field: "topic_count", title: "จำนวนรายการ"},
+                            //     {field: "status", title: "สถานะ", width: "100px"},
                             {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}],
-                        editable: "inline"
+                        editable: "popup"
                     });
                     $("#grid").kendoGrid({
                         dataSource: dataSource,
                         pageable: true,
                         height: 550,
-                      //  toolbar: ["create"],
+                        //  toolbar: ["create"],
                         columns: [
                             {feild: "lastname", title: "นามสกุล"},
                             {field: "name", title: compentencyName},
@@ -513,7 +534,7 @@ $position_update = "";
                         dataSource: employeeSource,
                         pageable: true,
                         height: 550,
-                     ///   toolbar: ["create"],
+                        ///   toolbar: ["create"],
                         columns: [
                             {field: "employee_id", title: "รหัสเจ้าหน้าที่", width: "100px"},
                             {field: "title", title: "คำนำหน้าชื่อ", width: "200px"},
@@ -527,7 +548,7 @@ $position_update = "";
                     $("#centralGrid").kendoGrid({
                         dataSource: centralSource,
                         pageable: true,
-                     //   height: 550,
+                        //   height: 550,
                         columns: [
                             //  {field: "index", title: "ลำดับ", width: "50px"},
                             {field: "division_name", title: "รายการ"},
@@ -553,22 +574,22 @@ $position_update = "";
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
-                            update : {
-                                 url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/User/update",
+                            update: {
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/User/update",
                             },
-                             parameterMap: function (options, operation) {
+                            parameterMap: function (options, operation) {
                                 if (operation !== "read" && options.models) {
                                     return {models: kendo.stringify(options.models)};
                                 }
                             }
                         },
-                        batch:true,
+                        batch: true,
                         schema: {
                             data: "data",
                             model: {
-                                id:"usercode",
+                                id: "usercode",
                                 fields: {
-                                    usercode: {type: "string",editable: false, nullable: true},
+                                    usercode: {type: "string", editable: false, nullable: true},
                                     firstname_th: {type: "string"},
                                     lastname_th: {type: "string"},
                                     position_name: {type: "string"},
@@ -606,12 +627,12 @@ $position_update = "";
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
-                            update:{
-                             url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/Competency/update",
-                          }
-                                    
+                            update: {
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/Competency/update",
+                            }
+
                         },
-                        batch:true,
+                        batch: true,
                         schema: {
                             data: "data",
                             model: {
@@ -648,7 +669,7 @@ $position_update = "";
                                 dataType: "json"
                             },
                         },
-                        batch:true,
+                        batch: true,
                         schema: {
                             data: "data",
                             model: {
@@ -702,7 +723,7 @@ $position_update = "";
                         filterable: {
                             mode: "row"
                         },
-                      //  toolbar: ["create"],
+                        //  toolbar: ["create"],
                         columns: [
                             {field: "competency_name", title: "Core Competency"},
                             {command: ["edit"], title: "แก้ไข", width: "100px"}
@@ -718,7 +739,7 @@ $position_update = "";
                         filterable: {
                             mode: "row"
                         },
-                      //  toolbar: ["create"],
+                        //  toolbar: ["create"],
                         columns: [
                             {field: "competency_name", title: "Managerial Competency"},
                             {command: ["edit"], title: "&nbsp;", width: "100px"}

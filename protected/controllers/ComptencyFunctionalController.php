@@ -83,6 +83,7 @@ class ComptencyFunctionalController extends Controller
 	public function actionCreate()
 	{
 		$model=new ComptencyFunctional;
+                $flModel=new CompetencyFunctionList;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -90,12 +91,16 @@ class ComptencyFunctionalController extends Controller
 		if(isset($_POST['ComptencyFunctional']))
 		{
 			$model->attributes=$_POST['ComptencyFunctional'];
-			if($model->save())
+			if($model->save()){
+                            
+                                $flModel->function_id=$model->function_id;
+                  
+                                $flModel->save();
 				$this->redirect(array('view','id'=>$model->function_id));
+                        }
 		}
-
 		$this->render('create',array(
-			'model'=>$model,
+			'model'=>$model,'flModel'=>$flModel
 		));
 	}
 
