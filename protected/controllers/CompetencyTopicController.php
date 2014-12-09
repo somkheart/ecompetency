@@ -86,14 +86,18 @@ class CompetencyTopicController extends Controller {
          $models = $_GET['models'];
         $data = json_decode($models);
         $tmpObject = $data[0];
-    //    $topic_id = $tmpObject->topic_id;
+        $topic_id = $tmpObject->topic_id;
         $topic_name = $tmpObject->topic_name;
         $b = array();
         $model = new CompetencyTopic;
-     //   $model->attributes = $topic_id;
-       // $model->topic_id = $topic_id;
         $model->topic_name = $topic_name;
         $model->save();
+        
+        $obj = new stdClass();
+        $obj->topic_id = $topic_id;
+        $obj->topic_name =$topic_name;
+        array_push($b, $obj);
+        echo json_encode(array("data" => $b));
     }
 
     /**

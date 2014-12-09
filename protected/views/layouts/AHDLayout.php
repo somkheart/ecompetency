@@ -53,7 +53,6 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             <div id="treeview-left"></div>
                         </div>
                     </div>
-
                 </div> 
 
                 <div id="right-pane">
@@ -76,7 +75,9 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         <div id="positiongrid" hidden="true"></div>
                         <div id="managerialgrid" hidden="true"></div>
                         <div id="competencytopic" hidden="true"></div>
-                        <div id="functionalgrid" hidden="true"></div>
+                        <div id="functionalgrid" hidden="true">
+                            <div class="k-toolbar k-grid-toolbar"><input style="" type="button" value="+ เพิ่มฟังก์ชันการประเมิน " class="k-button k-button-icontext k-grid-add" onclick="window.location = '<?php echo Yii::app()->getBaseUrl(true); ?>/comptencyFunctional/create'"/></div>
+                        </div>
                         <div id="departmentgrid" hidden="true"></div>
                         <div id="divisiongrid" hidden="true"></div>
                         <div class="demo-section k-content">
@@ -140,7 +141,9 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                 }
                 function init()
                 {
-                    $('#usergrid').show();
+                    $('#usergrid').hide();
+                    $("#assignCombo").hide();
+                    $('#split').hide();
                     $("#usergrid th[data-field=name]").html("รายชื่อเจ้าหน้าที่");
                 }
                 function onSelect(e) {
@@ -184,19 +187,20 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         $("#managerialgrid th[data-field=name]").html(managerialCompentency);
                     }
                     else if (selected == "Functional Competencies") {
-                        //  $("#usergrid").hide();
-                        //   $('#functionalgrid').show();
-                        //  $("#functionalgrid th[data-field=name]").html(managerialCompentency);
-                        window.location.href = "<?= $functional_url ?>";
+                        $("#usergrid").hide();
+                        $('#functionalgrid').show();
+                        $("#functionalgrid th[data-field=name]").html(managerialCompentency);
+                        //  window.location.href = "<?= $functional_url ?>";
                     }
                     else if (selected == "หัวข้อการประเมิน") {
                         $('#competencytopic').show();
                         $("#competencytcompetencytopicopic th[data-field=name]").html(managerialCompentency);
                     }
                     else if (selected == "กำหนดผู้ประเมิน") {
-                        $("#grid th[data-field=name]").html(managerialCompentency);
-                        $("#assignCombo").show();
-                        $('#split').show();
+                       // $("#grid th[data-field=name]").html(managerialCompentency);
+                        //$("#assignCombo").show();
+                        //$('#split').show();
+                        window.location.href = "<?php echo $baseURL; ?>/competencyAssessment/index";
                     }
                     else if (selected == "AHD") {
                         $('#grid').show();
@@ -484,7 +488,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                                 url: "<?php echo Yii::app()->getBaseUrl(true); ?>/CompetencyTopic/update",
                                 dataType: "json"
                             },
-                            destroy:{
+                            destroy: {
                                 url: "<?php echo Yii::app()->getBaseUrl(true); ?>/CompetencyTopic/delete",
                             },
                             parameterMap: function (options, operation) {
@@ -564,7 +568,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             {field: "group_name", title: "ชื่อกลุ่มงาน", width: "700px"},
                             {command: ["edit"], title: "&nbsp;", width: "80px"}
                         ],
-                        editable: "popup"
+                        editable: "inline"
                     });
                     var userDataSource = new kendo.data.DataSource({
                         transport: {
@@ -660,25 +664,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             }
                         }
                     });
-                    var departmentDatasource = new kendo.data.DataSource({
-                        transport: {
-                            read: {
-                                type: "POST",
-                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/department/JsonAll",
-                                contentType: "application/json; charset=utf-8",
-                                dataType: "json"
-                            },
-                        },
-                        batch: true,
-                        schema: {
-                            data: "data",
-                            model: {
-                                id: "id",
-                                fields: {
-                                }
-                            }
-                        }
-                    });
+
                     var divisionSource = new kendo.data.DataSource({
                         transport: {
                             read: {
@@ -710,6 +696,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         columns: [
                             {field: "index", title: "ลำดับ", width: "80px"},
                             {field: "division_name", title: "ส่วนงาน"},
+                            {field: "division_name", title: "ส่วนงาน",template:'<a href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/division/update/#= division_id #" class="k-button link">รายละเอียด</a>',width:"100px"},
                             {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}
                         ],
                         editable: "popup"
@@ -758,12 +745,45 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         schema: {
                             data: "data",
                             model: {
-                                id: "id",
+                                id: "function_id",
                                 fields: {
+                                    function_id: {editable: false}
                                 }
                             }
                         }
                     });
+                    function departmentEditor(container, options)
+                    {
+                        $('<input required data-text-field="department_name" data-value-field="department_id" data-bind="value:' + options.field + '"/>')
+                                .appendTo(container)
+                                .kendoDropDownList({
+                                    dataSource: {
+                                       // type: "json",
+                                        transport: {
+                                            read: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/department/JsonAll",
+                                             dataType: "json"
+                                        },
+                                        schema: {
+                                        data: "data",
+                                         model: { id: "department_id" }
+                                        }
+                                    }
+                         });
+                    }
+
+                    function categoryDropDownEditor(container, options) {
+                        $('<input required data-text-field="CategoryName" data-value-field="CategoryID" data-bind="value:' + options.field + '"/>')
+                                .appendTo(container)
+                                .kendoDropDownList({
+                                    autoBind: false,
+                                    dataSource: {
+                                        type: "odata",
+                                        transport: {
+                                            read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
+                                        }
+                                    }
+                                });
+                    }
                     $("#functionalgrid").kendoGrid({
                         dataSource: functionalSource,
                         pageSize: 20,
@@ -773,12 +793,35 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         filterable: {
                             mode: "row"
                         },
-                        toolbar: ["create"],
+                        //   toolbar: ["create"],
                         columns: [
                             {field: "function_name", title: "Functional Competency Topic "},
+                            {field: "function_status", title: "สถานะ", editor: categoryDropDownEditor, template: '#= function_id #'},
+                            {field: "function_id", title: "รายละเอียด", editable: false, template: '<a href="\<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/ComptencyFunctional/update/#= function_id #" class="k-button link">รายละเอียด</a>', width: "100px"},
                             {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}
                         ],
                         editable: "popup"
+                    });
+                    var departmentDatasource = new kendo.data.DataSource({
+                        transport: {
+                            read: {
+                                type: "POST",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/department/JsonAll",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json"
+                            },
+                        },
+                        batch: true,
+                        schema: {
+                            data: "data",
+                            model: {
+                                id: "department_id",
+                                fields: {
+                                    index: {editable: false},
+                                    department_id: {editable: false}
+                                }
+                            }
+                        }
                     });
                     $("#departmentgrid").kendoGrid({
                         dataSource: departmentDatasource,
@@ -794,10 +837,12 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             {field: "index", title: "ลำดับ", width: "80px"},
                             {field: "group_name", title: "กลุ่มงาน"},
                             {field: "department_name", title: "ฝ่าย"},
-                            {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}
+                            {field: "group_id",width:"100px",title:"แก้ไข",template:'<a href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/department/update/#= department_id #" class="k-edit k-button k-button-icontext"><span class="k-icon k-edit"></span>Edit</a>'},
+                            {command: ["destroy"], title: "&nbsp;", width: "100px"}
                         ],
                         editable: "popup"
                     });
+
                     $("#person").kendoDropDownList({
                         dataTextField: "fullname",
                         dataValueField: "usercode",
@@ -896,6 +941,9 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         ]
                     });
                 });
+                    $(".TextButton").kendoButton({
+                       // spriteCssClass: "k-icon k-i-refresh"
+                    }); 
             </script>
         </div>
 

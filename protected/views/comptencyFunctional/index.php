@@ -5,15 +5,17 @@
 $this->breadcrumbs = array(
     'Comptency Functionals',
 );
-
+/*
 $this->menu = array(
     array('label' => 'Create ComptencyFunctional', 'url' => array('create')),
     array('label' => 'Manage ComptencyFunctional', 'url' => array('admin')),
 );
-$index=2;
+ * */
+
+$index = 2;
 ?>
 <h1>Comptency Functionals</h1>
-<div id="function-create">เริ่มหัวข้อใหม่</div>
+<div id="function-create"><a href="<?php echo Yii::app()->getBaseUrl(true); ?>/comptencyFunctional/create">เริ่มหัวข้อใหม่</a></div>
 <div style="padding:5px" ></div>
 <table id="function-grid">
     <colgroup>
@@ -32,12 +34,12 @@ $index=2;
     </thead>
     <tbody>
 
-            <?php
-$this->widget('zii.widgets.CListView', array(
-    'dataProvider' => $dataProvider,
-    'itemView' => '_view',
-));
-?>
+        <?php
+        $this->widget('zii.widgets.CListView', array(
+            'dataProvider' => $dataProvider,
+            'itemView' => '_view',
+        ));
+        ?>
     </tbody>
 </table>
 <script>

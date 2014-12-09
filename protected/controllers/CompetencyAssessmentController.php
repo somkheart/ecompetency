@@ -1,6 +1,6 @@
 <?php
 
-class ComptencyFunctionalController extends Controller
+class CompetencyAssessmentController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -11,7 +11,6 @@ class ComptencyFunctionalController extends Controller
 	/**
 	 * @return array action filters
 	 */
-        /*
 	public function filters()
 	{
 		return array(
@@ -25,7 +24,6 @@ class ComptencyFunctionalController extends Controller
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
-        /*
 	public function accessRules()
 	{
 		return array(
@@ -46,25 +44,7 @@ class ComptencyFunctionalController extends Controller
 			),
 		);
 	}
-         * 
-         */
-        public function actionJsonList()
-        {
-            $condition = array("condition" => "function_status=1");
-            $functional = ComptencyFunctional::model()->findAll($condition);
-            $tmpData = array();
-            $b = array();
-            $index = 1;
-            foreach ($functional as $tmpItem) {
-                $obj = new stdClass();
-                $obj->function_id =$tmpItem->function_id;
-                $obj->function_name = $tmpItem->function_name;
-                $obj->function_type = $tmpItem->function_type;
-                $obj->index = $index++;
-                array_push($b, $obj);
-            }
-            echo json_encode(array("data" => $b));
-        }
+
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
@@ -82,26 +62,20 @@ class ComptencyFunctionalController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new ComptencyFunctional;
-                $flModel=new CompetencyFunctionList;
+		$model=new CompetencyAssessment;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['ComptencyFunctional']))
+		if(isset($_POST['CompetencyAssessment']))
 		{
-			$model->attributes=$_POST['ComptencyFunctional'];
-                        $model->function_status=1;
-			if($model->save()){
-                            
-                                $flModel->function_id=$model->function_id;
-                                
-                                $flModel->save();
-				$this->redirect(array('view','id'=>$model->function_id));
-                        }
+			$model->attributes=$_POST['CompetencyAssessment'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->ass_id));
 		}
+
 		$this->render('create',array(
-			'model'=>$model,'flModel'=>$flModel
+			'model'=>$model,
 		));
 	}
 
@@ -110,19 +84,18 @@ class ComptencyFunctionalController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate()
+	public function actionUpdate($id)
 	{
-            $id=1;
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['ComptencyFunctional']))
+		if(isset($_POST['CompetencyAssessment']))
 		{
-			$model->attributes=$_POST['ComptencyFunctional'];
+			$model->attributes=$_POST['CompetencyAssessment'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->function_id));
+				$this->redirect(array('view','id'=>$model->ass_id));
 		}
 
 		$this->render('update',array(
@@ -149,7 +122,7 @@ class ComptencyFunctionalController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('ComptencyFunctional');
+		$dataProvider=new CActiveDataProvider('CompetencyAssessment');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -160,10 +133,10 @@ class ComptencyFunctionalController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new ComptencyFunctional('search');
+		$model=new CompetencyAssessment('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['ComptencyFunctional']))
-			$model->attributes=$_GET['ComptencyFunctional'];
+		if(isset($_GET['CompetencyAssessment']))
+			$model->attributes=$_GET['CompetencyAssessment'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -174,12 +147,12 @@ class ComptencyFunctionalController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return ComptencyFunctional the loaded model
+	 * @return CompetencyAssessment the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=ComptencyFunctional::model()->findByPk($id);
+		$model=CompetencyAssessment::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -187,11 +160,11 @@ class ComptencyFunctionalController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param ComptencyFunctional $model the model to be validated
+	 * @param CompetencyAssessment $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='comptency-functional-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='competency-assessment-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

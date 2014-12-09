@@ -37,7 +37,7 @@ $user_id=Yii::app()->user->getId();
                         <td><img src="<?php echo $baseURL; ?>/photo/<?=$usercode?>.jpg" width="70px" height="70px"></td>
                         <td><?=$usercode?> นางสาว ผกามาศ วงค์สาย</td>
                         <td>เพื่อนรวมงานคนที่ 1 ที่ทำงานร่วมกันเป็นประจำภายในหรือภายนอกหน่วยงานในกลุ่มงานเดียวกัน</td>
-                        <td><a href='<?php echo $baseURL; ?>/ahd/choice/usercode/<?=$usercode?>' >ประเมิน</a></td>
+                        <td><a href='<?php echo $baseURL; ?>/ahd/choice/usercode/<?=$usercode?>'  class="iconTextButton">ประเมิน</a></td>
                     </tr>
                          <?php
                                 $index++;
@@ -48,6 +48,9 @@ $user_id=Yii::app()->user->getId();
             </table>
 <script>
                 $(document).ready(function() {
+                     $(".iconTextButton").kendoButton({
+                       
+                    });
                     $("#grid1").kendoGrid({
                       //  height: 550,
                         sortable: true,   

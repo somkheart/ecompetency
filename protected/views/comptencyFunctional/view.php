@@ -6,7 +6,7 @@ $this->breadcrumbs=array(
 	'Comptency Functionals'=>array('index'),
 	$model->function_id,
 );
-
+/*
 $this->menu=array(
 	array('label'=>'List ComptencyFunctional', 'url'=>array('index')),
 	array('label'=>'Create ComptencyFunctional', 'url'=>array('create')),
@@ -14,6 +14,8 @@ $this->menu=array(
 	array('label'=>'Delete ComptencyFunctional', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->function_id),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage ComptencyFunctional', 'url'=>array('admin')),
 );
+ * */
+
 ?>
 
 <h1>View ComptencyFunctional #<?php echo $model->function_id; ?></h1>

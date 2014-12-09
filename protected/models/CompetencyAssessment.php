@@ -1,21 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "department".
+ * This is the model class for table "competency_assessment".
  *
- * The followings are the available columns in table 'department':
- * @property integer $department_id
- * @property string $department_name
+ * The followings are the available columns in table 'competency_assessment':
+ * @property integer $ass_id
+ * @property string $usercode
+ * @property string $position_name
+ * @property integer $status
  * @property integer $group_id
+ * @property integer $department_id
+ * @property integer $division_id
+ * @property integer $topic_id
  */
-class Department extends CActiveRecord
+class CompetencyAssessment extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'department';
+		return 'competency_assessment';
 	}
 
 	/**
@@ -26,11 +31,11 @@ class Department extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('group_id', 'numerical', 'integerOnly'=>true),
-			array('department_name', 'length', 'max'=>255),
+			array('status, group_id, department_id, division_id, topic_id', 'numerical', 'integerOnly'=>true),
+			array('usercode, position_name', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('department_id, department_name, group_id', 'safe', 'on'=>'search'),
+			array('ass_id, usercode, position_name, status, group_id, department_id, division_id, topic_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,9 +56,14 @@ class Department extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'department_id' => 'ไอดี',
-			'department_name' => 'ฝ่าย',
-			'group_id' => 'กลุ่มงาน',
+			'ass_id' => 'Ass',
+			'usercode' => 'Usercode',
+			'position_name' => 'Position Name',
+			'status' => 'Status',
+			'group_id' => 'Group',
+			'department_id' => 'Department',
+			'division_id' => 'Division',
+			'topic_id' => 'Topic',
 		);
 	}
 
@@ -75,9 +85,14 @@ class Department extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('department_id',$this->department_id);
-		$criteria->compare('department_name',$this->department_name,true);
+		$criteria->compare('ass_id',$this->ass_id);
+		$criteria->compare('usercode',$this->usercode,true);
+		$criteria->compare('position_name',$this->position_name,true);
+		$criteria->compare('status',$this->status);
 		$criteria->compare('group_id',$this->group_id);
+		$criteria->compare('department_id',$this->department_id);
+		$criteria->compare('division_id',$this->division_id);
+		$criteria->compare('topic_id',$this->topic_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -88,7 +103,7 @@ class Department extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Department the static model class
+	 * @return CompetencyAssessment the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

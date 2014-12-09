@@ -56,6 +56,7 @@ class DepartmentController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+        
         public function actionJsonAll()
         {
                 $department=Department::model()->findAll();
