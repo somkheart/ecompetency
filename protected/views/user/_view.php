@@ -5,12 +5,8 @@
 
 <div class="view">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('usercode')); ?>:</b>
-	<?php echo CHtml::encode($data->usercode); ?>
+	<?php echo CHtml::link(CHtml::encode($data->usercode), array('view', 'id'=>$data->usercode)); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('position_code')); ?>:</b>
@@ -29,15 +25,15 @@
 	<?php echo CHtml::encode($data->nickname); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('fistname_eng')); ?>:</b>
-	<?php echo CHtml::encode($data->fistname_eng); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('firstname_eng')); ?>:</b>
+	<?php echo CHtml::encode($data->firstname_eng); ?>
 	<br />
 
-	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('lastname_eng')); ?>:</b>
 	<?php echo CHtml::encode($data->lastname_eng); ?>
 	<br />
 
+	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('position_name')); ?>:</b>
 	<?php echo CHtml::encode($data->position_name); ?>
 	<br />
@@ -64,6 +60,26 @@
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('password')); ?>:</b>
 	<?php echo CHtml::encode($data->password); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('lastLoginTime')); ?>:</b>
+	<?php echo CHtml::encode($data->lastLoginTime); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('department_id')); ?>:</b>
+	<?php echo CHtml::encode($data->department_id); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('division_id')); ?>:</b>
+	<?php echo CHtml::encode($data->division_id); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('group_id')); ?>:</b>
+	<?php echo CHtml::encode($data->group_id); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('md5pass')); ?>:</b>
+	<?php echo CHtml::encode($data->md5pass); ?>
 	<br />
 
 	*/ ?>

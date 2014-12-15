@@ -619,7 +619,8 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             {field: "lastname_th", title: "นามสกุล", width: "150px"},
                             {field: "position_name", title: "ตำแหน่ง", width: "200px"},
                             {field: "email", title: "อีเมล"},
-                            {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}
+                            {field: "email",width:"80px", title: "แก้ไข",template:'<a href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/User/update/usercode/#= usercode #"  style="text-align:center"><span   style="text-align:center" class="k-button">แก้ไข</span></a>'},
+                            {command: ["destroy"], title: "ลบ", width: "100px"}
                         ],
                         editable: "popup"
                     });
@@ -696,8 +697,8 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         columns: [
                             {field: "index", title: "ลำดับ", width: "80px"},
                             {field: "division_name", title: "ส่วนงาน"},
-                            {field: "division_name", title: "ส่วนงาน",template:'<a href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/division/update/#= division_id #" class="k-button link">รายละเอียด</a>',width:"100px"},
-                            {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}
+                            {field: "division_name", title: "แก้ไข",template:'<a href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/division/update/#= division_id #" class="k-button link">แก้ไข</a>',width:"100px"},
+                            {command: [ "destroy"], title: "&nbsp;", width: "180px"}
                         ],
                         editable: "popup"
                     });

@@ -25,7 +25,7 @@ class UserIdentity extends CUserIdentity {
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
         } else {
 
-            $this->_id = $user->id;
+            $this->_id = $user->usercode;
             $this->setState('lastLoginTime', $user->lastLoginTime);
             $this->errorCode = self::ERROR_NONE;
             $this->_id = $user->usercode;

@@ -8,6 +8,7 @@
  * @property string $division_name
  * @property integer $status
  * @property integer $department_id
+ * @property integer $group_id
  */
 class Division extends CActiveRecord
 {
@@ -27,11 +28,11 @@ class Division extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('status, department_id', 'numerical', 'integerOnly'=>true),
+			array('status, department_id, group_id', 'numerical', 'integerOnly'=>true),
 			array('division_name', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('division_id, division_name, status, department_id', 'safe', 'on'=>'search'),
+			array('division_id, division_name, status, department_id, group_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,6 +57,7 @@ class Division extends CActiveRecord
 			'division_name' => 'Division Name',
 			'status' => 'Status',
 			'department_id' => 'Department',
+			'group_id' => 'Group',
 		);
 	}
 
@@ -81,6 +83,7 @@ class Division extends CActiveRecord
 		$criteria->compare('division_name',$this->division_name,true);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('department_id',$this->department_id);
+		$criteria->compare('group_id',$this->group_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

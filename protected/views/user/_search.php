@@ -12,11 +12,6 @@
 )); ?>
 
 	<div class="row">
-		<?php echo $form->label($model,'id'); ?>
-		<?php echo $form->textField($model,'id'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->label($model,'usercode'); ?>
 		<?php echo $form->textField($model,'usercode'); ?>
 	</div>
@@ -42,8 +37,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'fistname_eng'); ?>
-		<?php echo $form->textField($model,'fistname_eng',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->label($model,'firstname_eng'); ?>
+		<?php echo $form->textField($model,'firstname_eng',array('size'=>60,'maxlength'=>255)); ?>
 	</div>
 
 	<div class="row">
@@ -79,6 +74,31 @@
 	<div class="row">
 		<?php echo $form->label($model,'email'); ?>
 		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>255)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'lastLoginTime'); ?>
+		<?php echo $form->textField($model,'lastLoginTime'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'department_id'); ?>
+		<?php echo $form->textField($model,'department_id'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'division_id'); ?>
+		<?php echo $form->textField($model,'division_id'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'group_id'); ?>
+		<?php echo $form->textField($model,'group_id'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'md5pass'); ?>
+		<?php echo $form->textField($model,'md5pass',array('size'=>60,'maxlength'=>100)); ?>
 	</div>
 
 	<div class="row buttons">

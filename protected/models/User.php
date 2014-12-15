@@ -4,7 +4,6 @@
  * This is the model class for table "user".
  *
  * The followings are the available columns in table 'user':
- * @property integer $id
  * @property integer $usercode
  * @property string $position_code
  * @property string $firstname_th
@@ -23,6 +22,7 @@
  * @property integer $department_id
  * @property integer $division_id
  * @property integer $group_id
+ * @property string $md5pass
  */
 class User extends CActiveRecord
 {
@@ -42,13 +42,17 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('usercode', 'required'),
-			array('id, usercode, tel1, tel2, department_id, division_id, group_id', 'numerical', 'integerOnly'=>true),
+			array('usercode','required'),
+                        array('email','required'),
+                        array('firstname_th','required'),
+                        array('lastname_th','required'),
+			array('usercode, tel1, tel2, department_id, division_id, group_id', 'numerical', 'integerOnly'=>true),
 			array('position_code, firstname_th, lastname_th, nickname, firstname_eng, lastname_eng, position_name, tel, mobile_number, email, password', 'length', 'max'=>255),
+			array('md5pass', 'length', 'max'=>100),
 			array('lastLoginTime', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, usercode, position_code, firstname_th, lastname_th, nickname, firstname_eng, lastname_eng, position_name, tel, tel1, tel2, mobile_number, email, password, lastLoginTime, department_id, division_id, group_id', 'safe', 'on'=>'search'),
+			array('usercode, position_code, firstname_th, lastname_th, nickname, firstname_eng, lastname_eng, position_name, tel, tel1, tel2, mobile_number, email, password, lastLoginTime, department_id, division_id, group_id, md5pass', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,25 +73,25 @@ class User extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'usercode' => 'Usercode',
-			'position_code' => 'Position Code',
-			'firstname_th' => 'Firstname Th',
-			'lastname_th' => 'Lastname Th',
-			'nickname' => 'Nickname',
-			'firstname_eng' => 'Firstname Eng',
-			'lastname_eng' => 'Lastname Eng',
-			'position_name' => 'Position Name',
+			'usercode' => 'รหัสเจ้าหน้าที่ ',
+			'position_code' => 'รหัสตำแหน่ง',
+			'firstname_th' => 'ชื่อ (ภาษาไทย)',
+			'lastname_th' => 'นามสกุล (ภาษาไทย)',
+			'nickname' => 'ชื่อเล่น',
+			'firstname_eng' => 'ชื่อ ( ภาษาอังกฤษ )',
+			'lastname_eng' => 'นามสกุล ( ภาษาอังกฏษ )',
+			'position_name' => 'ตำแหน่ง',
 			'tel' => 'Tel',
 			'tel1' => 'Tel1',
 			'tel2' => 'Tel2',
-			'mobile_number' => 'Mobile Number',
-			'email' => 'Email',
+			'mobile_number' => 'เบอร์มือถือ',
+			'email' => 'อีเมล',
 			'password' => 'Password',
 			'lastLoginTime' => 'Last Login Time',
-			'department_id' => 'Department',
-			'division_id' => 'Division',
-			'group_id' => 'Group',
+			'department_id' => 'ฝ่าย',
+			'division_id' => 'ส่วนงาน',
+			'group_id' => 'กลุ่มงาน',
+			'md5pass' => 'Md5pass',
 		);
 	}
 
@@ -109,7 +113,6 @@ class User extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
 		$criteria->compare('usercode',$this->usercode);
 		$criteria->compare('position_code',$this->position_code,true);
 		$criteria->compare('firstname_th',$this->firstname_th,true);
@@ -128,6 +131,7 @@ class User extends CActiveRecord
 		$criteria->compare('department_id',$this->department_id);
 		$criteria->compare('division_id',$this->division_id);
 		$criteria->compare('group_id',$this->group_id);
+		$criteria->compare('md5pass',$this->md5pass,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

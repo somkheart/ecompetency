@@ -25,5 +25,6 @@ $this->menu=array(
 		'division_name',
 		'status',
 		'department_id',
+		'group_id',
 	),
 )); ?>

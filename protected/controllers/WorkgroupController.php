@@ -12,10 +12,13 @@ class WorkgroupController extends Controller {
      * @return array action filters
      */
     public function filters() {
-        return array(
-            'accessControl', // perform access control for CRUD operations
-                // 'postOnly + delete', // we only allow deletion via POST request
-        );
+        /*
+          return array(
+          'accessControl', // perform access control for CRUD operations
+          // 'postOnly + delete', // we only allow deletion via POST request
+          );
+         * 
+         */
     }
 
     /**
@@ -24,19 +27,22 @@ class WorkgroupController extends Controller {
      * @return array access control rules
      */
     public function accessRules() {
-        return array(
-            array('allow',
-                'actions' => array('site', 'error', 'login', 'logout'),
-                'users' => array('*'),
-            ),
-            array('allow',
-                'actions' => array('json', 'View', 'Create', 'Update', 'Delete', 'Index', 'Admin'), // กำหนดสิทธิ์เข้าใช้งาน actionContact
-                'expression' => 'AccessControl::check_access(array(1,2))', // ได้เฉพาะ group 1 และ 2 เท่านั่น
-            ),
-            array('deny',
-                'users' => array('*'),
-            ),
-        );
+        /*
+          return array(
+          array('allow',
+          'actions' => array('site', 'error', 'login', 'logout'),
+          'users' => array('*'),
+          ),
+          array('allow',
+          'actions' => array('json', 'View', 'Create', 'Update', 'Delete', 'Index', 'Admin'), // กำหนดสิทธิ์เข้าใช้งาน actionContact
+          'expression' => 'AccessControl::check_access(array(1,2))', // ได้เฉพาะ group 1 และ 2 เท่านั่น
+          ),
+          array('deny',
+          'users' => array('*'),
+          ),
+          );
+         * 
+         */
     }
 
     public function actionJson() {
@@ -223,5 +229,7 @@ class WorkgroupController extends Controller {
             Yii::app()->end();
         }
     }
+
+    
 
 }
