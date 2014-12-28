@@ -229,4 +229,8 @@ class UserController extends Controller
 			Yii::app()->end();
 		}
 	}
+       public function actionLoadDivision($group_id) {
+        $model = Department::model()->findByAttributes(array('group_id' => $group_id));
+        echo CHtml::activeDropDownList($model, 'department_id', CHtml::listData(Department::model()->findAllByAttributes(array('group_id' => $group_id)), 'department_id', 'department_name'), array('class'=>'k-input','style'=>'width:200px','onchange'=>'loadData(\'1\',\'2\')','empty' => '---- เลือก ----'));
+       }
 }

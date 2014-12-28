@@ -25,6 +25,7 @@ class ComptencyFunctional extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('function_status', 'numerical', 'integerOnly' => true),
+            array('function_name','required'), 
             array('function_name', 'length', 'max' => 255),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.

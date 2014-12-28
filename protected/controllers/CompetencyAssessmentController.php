@@ -13,10 +13,13 @@ class CompetencyAssessmentController extends Controller
 	 */
 	public function filters()
 	{
+            /*
 		return array(
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
 		);
+             * 
+             */
 	}
 
 	/**
@@ -26,6 +29,7 @@ class CompetencyAssessmentController extends Controller
 	 */
 	public function accessRules()
 	{
+            /*
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view'),
@@ -43,8 +47,55 @@ class CompetencyAssessmentController extends Controller
 				'users'=>array('*'),
 			),
 		);
+             * 
+             * 
+             */
 	}
+        public function actionRead()
+        {
+            $tmpObjectList=  CompetencyAssessment::model()->findAll();
+            $tmpData = array();
+            $b = array();
+            $index=1;
+            foreach ($tmpObjectList as $tmpObject) {
+                $obj = new stdClass();
+                $obj->ass_id = $tmpObject->ass_id;
+                $obj->usercode = $tmpObject->usercode;
+                $obj->position_name=$tmpObject->position_name;
+                $obj->status=$tmpObject->status;
+                $obj->group_id=$tmpObject->group_id;
+                $obj->department_id=$tmpObject->department_id;
+                $obj->division_id=$tmpObject->division_id;
+                $obj->topic_id=$tmpObject->topic_id;
+                $obj->position_id=$tmpObject->position_id;
+                $obj->level=$tmpObject->level;
+                $usercode=$tmpObject->usercode;
+                $tmpUser=User::model()->findByPk($usercode);
+                $tmpName=$tmpUser->firstname_th . " " .$tmpUser->lastname_th;
+                $position_code=$tmpUser->position_code;
+                
+                // ตำแหน่ง 
+                $tmpPosition= UserPosition::model()->find('position_code=:position_code',array('position_code'=>$position_code));
+                $obj->position_name=$tmpPosition->position_name;
+                $obj->fullname=$tmpName;
+                
+                // กลุ่มงาน
+                $tmpGroup= Workgroup::model()->find('group_type=:group_type',array('group_type'=>$tmpObject->group_id));
+                $obj->group_name=$tmpGroup->group_name;
+                
+                // ฝ่าย
+                $tmpDepartment= Department::model()->find('department_id=:department_id',array('department_id'=>$tmpObject->department_id));
+                $obj->department_name=$tmpDepartment->department_name;
+                
+                // ส่วนงาน
+                $tmpDivision= Division::model()->find('division_id=:division_id',array('division_id'=>$tmpObject->division_id));
+                $obj->division_name=$tmpDivision->division_name;
+                
 
+                array_push($b, $obj);
+            }
+             echo json_encode(array("data" => $b));
+        }
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed

@@ -34,7 +34,7 @@ $this->breadcrumbs = array(
     </div>
     <div>
         <label>ประเภทผู้ใช้งาน</label>
-        <?php echo CHtml::dropDownList("cbright", null, array('เจ้าหน้าที่', 'เจ้าหน้าที่ AHD', 'Administrator'), array('id' => "cbright","name"=>"cbright")); ?>
+        <?php echo CHtml::dropDownList("cbright", null, array('เจ้าหน้าที่', 'เจ้าหน้าที่ AHD'), array('id' => "cbright","name"=>"cbright")); ?>
     </div>
     <span class="row rememberMe" >
 

@@ -53,11 +53,12 @@ class Division extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'division_id' => 'Division',
-			'division_name' => 'Division Name',
-			'status' => 'Status',
-			'department_id' => 'Department',
-			'group_id' => 'Group',
+			'division_id' => ' ส่วนงาน ',
+			'division_name' => ' ส่วนงาน ',
+			'status' => ' สถานะ ',
+			'department_id' => 'ฝ่าย ',
+                        'department_name'=>'ฝ่าย',
+			'group_id' => ' กลุ่มงาน ',
 		);
 	}
 

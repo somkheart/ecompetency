@@ -13,6 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Create CompetencyAssessment</h1>
+<h1>เพิ่มผู้ประเมิน</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

@@ -65,6 +65,7 @@ class ComptencyFunctionalController extends Controller
             }
             echo json_encode(array("data" => $b));
         }
+      
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
@@ -84,22 +85,36 @@ class ComptencyFunctionalController extends Controller
 	{
 		$model=new ComptencyFunctional;
                 $flModel=new CompetencyFunctionList;
+                $usercode = Yii::app()->user->id;
+                $tmpModel=  TmpFunction::model()->findAllByAttributes(array('usercode'=>$usercode));
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['ComptencyFunctional']))
-		{
-			$model->attributes=$_POST['ComptencyFunctional'];
+		if (isset($_POST['ComptencyFunctional'])) {
+                        $model->attributes=$_POST['ComptencyFunctional'];
                         $model->function_status=1;
 			if($model->save()){
-                            
-                                $flModel->function_id=$model->function_id;
+                           
+                            foreach ($tmpModel as $item)
+                            {
+                                $obj=new CompetencyFunctionList;
+                                $obj->attributes=$model;
+                                $obj->function_id=$model->function_id;
+                                $obj->flist_name=$item->function_name;
+                                $obj->dic1=$item->dic1;
+                                $obj->dic2=$item->dic2;
+                                $obj->dic3=$item->dic3;
+                                $obj->dic4=$item->dic4;
+                                $obj->dic5=$item->dic5;
+                                $obj->save();
+				//$this->redirect(array('view','id'=>$model->function_id));
                                 
-                                $flModel->save();
-				$this->redirect(array('view','id'=>$model->function_id));
+                            }
+                            TmpFunction::model()->deleteAllByAttributes(array('usercode'=>$usercode));
                         }
 		}
+               
 		$this->render('create',array(
 			'model'=>$model,'flModel'=>$flModel
 		));
@@ -112,7 +127,8 @@ class ComptencyFunctionalController extends Controller
 	 */
 	public function actionUpdate()
 	{
-            $id=1;
+          
+               $id=1;
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed

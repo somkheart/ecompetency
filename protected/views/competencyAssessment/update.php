@@ -16,6 +16,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Update CompetencyAssessment <?php echo $model->ass_id; ?></h1>
+<h1>แก้ไขผู้ประเมิน <?php echo $model->ass_id; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

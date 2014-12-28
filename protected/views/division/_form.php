@@ -10,7 +10,7 @@
         {
             var group_id = $("#Division_group_id").val();
             var url = "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/department/loadDivision/group_id/" + group_id;
-            alert(url);
+          //  alert(url);
             $.ajax({url: url,
                 success: function (result) {
                     $("#groupBox").html(result);
@@ -33,7 +33,12 @@
 
     <p class="note">Fields with <span class="required">*</span> are required.</p>
 
-    <?php echo $form->errorSummary($model); ?>
+    <?php echo $form->errorSummary($model); 
+    if(empty($model->status))
+    {
+    $model->status=1;
+    }
+    ?>
 
     <div class="row" style="padding:10px">
         <?php echo $form->labelEx($model, 'division_name'); ?>

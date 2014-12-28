@@ -4,10 +4,10 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+
 <title>ระบบ E-Competency สถาบันเทคโนโลยีป้องกันประเทศ (องค์การมหาชน) กระทรวงกลาโหม </title>
 <?php
 $baseURL = Yii::app()->getBaseUrl(true);
-
 $person_url = "$baseURL/CompetencyAssessor/JsonUser";
 $workgroup_url = "$baseURL/Workgroup";
 $workgroup_read = "$baseURL/Workgroup/Json";
@@ -58,28 +58,36 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                 <div id="right-pane">
                     <div class="pane-content">
                         <div id="assignCombo" hidden="true" style="height: 40px; margin-top: 10px;">
-                            <label class="category-label" style="width:70px">ส่วนงาน:</label>
+                            <label class="category-label" style="width:70px">กลุ่มงาน :</label>
                             <input id="function" style="width:200px"/>
                         </div>
                         <div id="graphCombo" hidden="true" style="height: 40px; margin-top: 10px;">
-                            <label class="category-label" style="width:70px">ชิ่อ:</label>
+                            <label class="category-label" style="width:70px">ฝ่าย:</label>
                             <input id="person" style="width:200px"/>
                         </div>
+
                         <div id="ContentData"><?php echo $content; ?></div>
                         <div id="centralGrid" hidden="true"></div>
                         <div id="grid" hidden="true"></div>
                         <div id="competencygrid"  hidden="true"></div>
                         <div id="employeeGrid" hidden="true"></div>
                         <div id="dtigroup" hidden="true"></div>
-                        <div id="usergrid" hidden="true"></div>
+                        <div id="usergrid" hidden="true">
+                         <div class="k-toolbar k-grid-toolbar"><input style="" type="button" value="+ เพิ่มเจ้าหน้าที่ใหม่ " class="k-button k-button-icontext k-grid-add-tmp" onclick="window.location = '<?php echo Yii::app()->getBaseUrl(true); ?>/user/create'"/></div>
+                        </div>
                         <div id="positiongrid" hidden="true"></div>
                         <div id="managerialgrid" hidden="true"></div>
                         <div id="competencytopic" hidden="true"></div>
                         <div id="functionalgrid" hidden="true">
-                            <div class="k-toolbar k-grid-toolbar"><input style="" type="button" value="+ เพิ่มฟังก์ชันการประเมิน " class="k-button k-button-icontext k-grid-add" onclick="window.location = '<?php echo Yii::app()->getBaseUrl(true); ?>/comptencyFunctional/create'"/></div>
+                            <div class="k-toolbar k-grid-toolbar"><input style="" type="button" value="+ เพิ่มเจ้าหน้าที่ใหม่ " class="k-button k-button-icontext k-grid-add" onclick="window.location = '<?php echo Yii::app()->getBaseUrl(true); ?>/comptencyFunctional/create'"/></div>
                         </div>
                         <div id="departmentgrid" hidden="true"></div>
-                        <div id="divisiongrid" hidden="true"></div>
+                        <div id="divisiongrid" hidden="true">
+                            <div class="k-toolbar k-grid-toolbar"><a class="k-button k-button-icontext k-grid-add-tmp" href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/division/create"><span class="k-icon k-add"></span>เพิ่มส่วนงาน</a></div>
+                        </div>
+                        <div id="Assessmentgrid" hidden="true">
+                            <div class="k-toolbar k-grid-toolbar"><a class="k-button k-button-icontext k-grid-add-tmp" href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/CompetencyAssessment/create"><span class="k-icon k-add"></span>เพิ่มการประเมิน</a></div>
+                        </div>
                         <div class="demo-section k-content">
                             <div id="chart" hidden="true"></div>
                         </div>
@@ -119,6 +127,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                 $("#split").kendoSplitter({
                     orientation: "horizontal"
                 });
+                $("#add-assessment").kendoButton();
                 function hidegrid()
                 {
                     $("#ContentData").hide();
@@ -138,6 +147,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                     $("#split").hide();
                     $("#chart").hide();
                     $("#graphCombo").hide();
+                    $("#Assessmentgrid").hide();
                 }
                 function init()
                 {
@@ -197,10 +207,10 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         $("#competencytcompetencytopicopic th[data-field=name]").html(managerialCompentency);
                     }
                     else if (selected == "กำหนดผู้ประเมิน") {
-                       // $("#grid th[data-field=name]").html(managerialCompentency);
-                        //$("#assignCombo").show();
+                        $("#Assessmentgrid th[data-field=name]").html("กำหนดผู้ประเมิน");
+                        $("#Assessmentgrid").show();
                         //$('#split').show();
-                        window.location.href = "<?php echo $baseURL; ?>/competencyAssessment/index";
+                        // window.location.href = "<?php echo $baseURL; ?>/competencyAssessment/index";
                     }
                     else if (selected == "AHD") {
                         $('#grid').show();
@@ -234,25 +244,36 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             type: "bar"
                         },
                         series: [{
-                                data: [3.907, -7.943, 10.848, 9.284, 9.263, 9.801, -25.890, 8.238, -69.552, 6.855]
+                                data: [3.907, -7.943, 10.848, 9.284, 9.263, 9.801, -25.890, 8.238, -69.552, 99]
                             }, {
                                 data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                             }],
                         valueAxis: {
-                            min: -70,
-                            max: 20,
+                            min: -100,
+                            max: 100,
                             labels: {
                                 format: "{0}%"
                             },
                             line: {
-                                visible: false
+                                visible: true
                             },
-                            axisCrossingValue: [0, -70]
+                            axisCrossingValue: [0, -100]
                         },
                         categoryAxes: [{
                                 // Default axis, no labels
                             }, {
-                                categories: ["ความเป็นผู้นำ (Leadership)", "การวางแผนและการปฎิบัติตามแผน", 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011],
+                                categories: [
+                                    "ความเป็นผู้นำ (Leadership)",
+                                    "การวางแผนและการปฎิบัติตามแผน",
+                                    "ความยึดมั่นใจผลสำเร็จของงาน (Result Oriented)",
+                                    "การประสานงานและการทำงานเป็นทีม ( Cooperation & Teamwork )",
+                                    "การมีจรรยาบรรณและความซื่อสัตย์ (Ethic & integrity)",
+                                    "จิตสำนึกในการบริการ ( Service Mind Oriented )",
+                                    "การพัฒนาอย่างต่อเนื่อง (Continuous Improvement)",
+                                    "การวางแผนและปฏิบัติตามแผน ( Planning & Oranizing)",
+                                    "ความไว้ใจได้ และความน่าเชื่อถือ (Trusted & Reliable)",
+                                    "การสอนงานและให้คำปรึกษา (Coaching & Mentoring)"
+                                ],
                                 line: {
                                     // Optional
                                     visible: false
@@ -333,6 +354,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         ]
                     });
                     $("#treeview-left").kendoTreeView({
+                        //  height:"600px",
                         dataSource: inlineDefault,
                         select: onSelect
                     });
@@ -515,13 +537,73 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         // height: 550,
                         toolbar: ["create"],
                         columns: [
-                            //  {field: "index", title: "ลำดับ", width: "80px",editable: false, nullable: tru},
                             {field: "topic_name", title: "หัวข้อ"},
-                            //   {field: "topic_count", title: "จำนวนรายการ"},
-                            //     {field: "status", title: "สถานะ", width: "100px"},
                             {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}],
                         editable: "popup"
                     });
+
+                    var funclistSource = new kendo.data.DataSource({
+                        transport: {
+                            read: {
+                                type: "POST",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/tmpFunction/Read",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json"
+                            },
+                            create: {
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/tmpFunction/create",
+                                dataType: "json"
+                            },
+                            update: {
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/tmpFunction/update",
+                                dataType: "json"
+                            },
+                            destroy: {
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/tmpFunction/delete",
+                            },
+                            parameterMap: function (options, operation) {
+                                if (operation !== "read" && options.models) {
+                                    return {models: kendo.stringify(options.models)};
+                                }
+                            }
+                        },
+                        batch: true,
+                        schema: {
+                            data: "data",
+                            model: {
+                                id: "tmp_id",
+                                fields: {
+                                    tmp_id: {type: "string"},
+                                    function_name: {type: "string"},
+                                    dic1: {type: "string"},
+                                    dic2: {type: "string"},
+                                    dic3: {type: "string"},
+                                    dic4: {type: "string"},
+                                    dic5: {type: "string", validation: {required: true}}
+
+                                }
+                            }
+                        }
+                    });
+                    $("#funclist").kendoGrid({
+                        dataSource: funclistSource,
+                        pageable: true,
+                        // height: 550,
+                        toolbar: ["create"],
+                        columns: [
+                            {field: "tmp_id", visible: false},
+                            {field: "function_name", title: "Functional Competencies "},
+                            {field: "dic1", title: "ระดับ 1 ", editor: textareaEditor, template: "#= dic1 #"},
+                            {field: "dic2", title: "ระดับ 2 ", editor: textareaEditor, template: "#= dic2 #"},
+                            {field: "dic3", title: "ระดับ 3 ", editor: textareaEditor, template: "#= dic3 #"},
+                            {field: "dic4", title: "ระดับ 4 ", editor: textareaEditor, template: "#= dic4 #"},
+                            {field: "dic5", title: "ระดับ 5 ", editor: textareaEditor, template: "#= dic5 #"},
+                            {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}],
+                        editable: "popup"
+                    });
+                    function textareaEditor(container, options) {
+                        $('<textarea data-bind="value: ' + options.field + '" cols="20" rows="4"></textarea>').appendTo(container);
+                    }
                     $("#grid").kendoGrid({
                         dataSource: dataSource,
                         pageable: true,
@@ -612,14 +694,14 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         filterable: {
                             mode: "row"
                         },
-                        toolbar: ["create"],
+                        //toolbar: ["create"],
                         columns: [
                             {field: "usercode", title: "รหัส", width: "70px"},
                             {field: "firstname_th", title: "ชื่อ", width: "200px"},
                             {field: "lastname_th", title: "นามสกุล", width: "150px"},
                             {field: "position_name", title: "ตำแหน่ง", width: "200px"},
-                            {field: "email", title: "อีเมล"},
-                            {field: "email",width:"80px", title: "แก้ไข",template:'<a href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/User/update/usercode/#= usercode #"  style="text-align:center"><span   style="text-align:center" class="k-button">แก้ไข</span></a>'},
+                            {field: "email", title: "อีเมล",width:"150px"},
+                            {field: "email", width: "80px", title: "แก้ไข", template: '<a href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/User/update/usercode/#= usercode #"  style="text-align:center"><span   style="text-align:center" class="k-button">แก้ไข</span></a>'},
                             {command: ["destroy"], title: "ลบ", width: "100px"}
                         ],
                         editable: "popup"
@@ -697,8 +779,8 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         columns: [
                             {field: "index", title: "ลำดับ", width: "80px"},
                             {field: "division_name", title: "ส่วนงาน"},
-                            {field: "division_name", title: "แก้ไข",template:'<a href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/division/update/#= division_id #" class="k-button link">แก้ไข</a>',width:"100px"},
-                            {command: [ "destroy"], title: "&nbsp;", width: "180px"}
+                            {field: "division_name", title: "แก้ไข", template: '<a href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/division/update/#= division_id #" class="k-button link">แก้ไข</a>', width: "100px"},
+                            {command: ["destroy"], title: "&nbsp;", width: "180px"}
                         ],
                         editable: "popup"
                     });
@@ -759,17 +841,17 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                                 .appendTo(container)
                                 .kendoDropDownList({
                                     dataSource: {
-                                       // type: "json",
+                                        // type: "json",
                                         transport: {
                                             read: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/department/JsonAll",
-                                             dataType: "json"
+                                            dataType: "json"
                                         },
                                         schema: {
-                                        data: "data",
-                                         model: { id: "department_id" }
+                                            data: "data",
+                                            model: {id: "department_id"}
                                         }
                                     }
-                         });
+                                });
                     }
 
                     function categoryDropDownEditor(container, options) {
@@ -797,12 +879,76 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         //   toolbar: ["create"],
                         columns: [
                             {field: "function_name", title: "Functional Competency Topic "},
-                            {field: "function_status", title: "สถานะ", editor: categoryDropDownEditor, template: '#= function_id #'},
-                            {field: "function_id", title: "รายละเอียด", editable: false, template: '<a href="\<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/ComptencyFunctional/update/#= function_id #" class="k-button link">รายละเอียด</a>', width: "100px"},
+                            //  {field: "function_status", title: "สถานะ", editor: categoryDropDownEditor, template: '#= function_id #', width: "100px"},
+                            // {field: "function_id", title: "รายละเอียด", editable: false, template: '<a href="\<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/ComptencyFunctional/update/#= function_id #" class="k-button link">รายละเอียด</a>', width: "100px"},
                             {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}
                         ],
                         editable: "popup"
                     });
+                    var accessSource = new kendo.data.DataSource({
+                        transport: {
+                            read: {
+                                type: "POST",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/CompetencyAssessment/Read",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json"
+                            },
+                        },
+                        schema: {
+                            data: "data",
+                            model: {
+                                id: "ass_id",
+                                fields: {
+                                    fullname:{type:"string",editable:false},
+                                    ass_id : {type:"string",editable:false,visibale:false}
+                                }
+                            }
+                        }
+                    });
+                    $("#Assessmentgrid").kendoGrid({
+                        dataSource: accessSource,
+                        pageSize: 20,
+                        scrollable: true,
+                        sortable: true,
+                        pagination: true,
+                        toolbar: ["create",],
+                        filterable: {
+                            mode: "row"
+                        },
+                        //   toolbar: ["create"],
+                        columns: [
+                            {field: "usercode", title: "รหัสเจ้าหน้าที่", width: "150px"},
+                            {field: "fullname", title: "ชื่อ-นามสกุล"},
+                            {field: "position_name", title: " ตำแหน่ง ", width: "150px", editor: positionDropDownEditor},
+                            {field: "group_name", title: " กลุ่มงาน ", width: "150px"},
+                            {field: "department_name", title: " ฝ่าย "},
+                            {field: "division_name", title: " ส่วนงาน "},
+                            {field: "ass_id", title: " เพิ่มผู้ประเมิน ",template:"<a href=''><span   style=\"text-align:center\" class=\"k-button\">เพิ่มผู้ประเมิน</span></a>",editable:false},
+
+                        ],
+                        editable: "popup"
+                    });
+                    function positionDropDownEditor(container, options) {
+                        $('<input required data-text-field="PositionName" data-value-field="PositionCode" data-bind="value:' + options.field + '"/>')
+                                .appendTo(container)
+                                .kendoDropDownList({
+                                   // autoBind: true,
+                                    dataSource: {
+                                        type: "json",
+                                        transport: {
+                                            read: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/Position/Json"                           
+                                        },
+                                        schema: {
+                                            data: "data",
+                                            model: {
+                                                id: "position_code",
+                                                fields: {
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+                    }
                     var departmentDatasource = new kendo.data.DataSource({
                         transport: {
                             read: {
@@ -838,7 +984,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             {field: "index", title: "ลำดับ", width: "80px"},
                             {field: "group_name", title: "กลุ่มงาน"},
                             {field: "department_name", title: "ฝ่าย"},
-                            {field: "group_id",width:"100px",title:"แก้ไข",template:'<a href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/department/update/#= department_id #" class="k-edit k-button k-button-icontext"><span class="k-icon k-edit"></span>Edit</a>'},
+                            {field: "group_id", width: "100px", title: "แก้ไข", template: '<a href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/department/update/#= department_id #" class="k-edit k-button k-button-icontext"><span class="k-icon k-edit"></span>Edit</a>'},
                             {command: ["destroy"], title: "&nbsp;", width: "100px"}
                         ],
                         editable: "popup"
@@ -942,9 +1088,9 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         ]
                     });
                 });
-                    $(".TextButton").kendoButton({
-                       // spriteCssClass: "k-icon k-i-refresh"
-                    }); 
+                $(".TextButton").kendoButton({
+                    // spriteCssClass: "k-icon k-i-refresh"
+                });
             </script>
         </div>
 

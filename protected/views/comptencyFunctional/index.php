@@ -14,6 +14,8 @@ $this->menu = array(
 
 $index = 2;
 ?>
+
+
 <h1>Comptency Functionals</h1>
 <div id="function-create"><a href="<?php echo Yii::app()->getBaseUrl(true); ?>/comptencyFunctional/create">เริ่มหัวข้อใหม่</a></div>
 <div style="padding:5px" ></div>

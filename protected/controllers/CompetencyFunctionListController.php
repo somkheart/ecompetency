@@ -13,10 +13,13 @@ class CompetencyFunctionListController extends Controller
 	 */
 	public function filters()
 	{
+            /*
 		return array(
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
 		);
+             * 
+             */
 	}
 
 	/**
@@ -26,6 +29,7 @@ class CompetencyFunctionListController extends Controller
 	 */
 	public function accessRules()
 	{
+            /*
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view'),
@@ -43,8 +47,24 @@ class CompetencyFunctionListController extends Controller
 				'users'=>array('*'),
 			),
 		);
+             * 
+             */
 	}
-
+        public function actionRead()
+        {
+            $functional = CompetencyFunctionList::model()->findAll();
+            $tmpData = array();
+            $b = array();
+            $index = 1;
+            foreach ($functional as $tmpItem) {
+                $obj = new stdClass();
+                $obj->flist_id =$tmpItem->flist_id;
+                $obj->function_id = $tmpItem->function_id;
+                $obj->index = $index++;
+                array_push($b, $obj);
+            }
+            echo json_encode(array("data" => $b));
+        }
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
@@ -86,8 +106,11 @@ class CompetencyFunctionListController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
-
+                $list=$_SESSION['tmp_function'];
+                $list=array('xx','ssss');
+		$_SESSION['tmp_function']=$list;
+                $model=$this->loadModel($id);
+                
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 

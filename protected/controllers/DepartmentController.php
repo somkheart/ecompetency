@@ -72,6 +72,19 @@ class DepartmentController extends Controller {
         }
         echo json_encode(array("data" => $b));
     }
+     public function actionListByGroup($group_id) {
+        $department = Department::model()->findAllByAttributes(array('group_id' => $group_id));
+        $tmpData = array();
+        $b = array();
+        $index = 1;
+        foreach ($department as $tmpItem) {
+            $obj = new stdClass();
+            $obj->department_id = $tmpItem->department_id;
+            $obj->department_name = $tmpItem->department_name;
+            array_push($b, $obj);
+        }
+        echo json_encode(array("data" => $b));
+    }
 
     /**
      * Creates a new model.

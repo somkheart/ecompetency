@@ -50,10 +50,28 @@ class DivisionController extends Controller {
     }
 
     public function actionAllJson() {
-        $div = Division::model()->findAll();
+        $div = Division::model()->findAll(array('condition'=>'department_id<>1'));
         $tmpData = array();
         $b = array();
         $index = 1;
+        foreach ($div as $tmpItem) {
+            $obj = new stdClass();
+            $obj->index = $index++;
+            $obj->division_id = $tmpItem->division_id;
+            $obj->division_name = $tmpItem->division_name;
+            array_push($b, $obj);
+        }
+        echo json_encode(array("data" => $b));
+    }
+    public function actionDivisionByDaprtment($department_id) {
+        $div = Division::model()->findAllByAttributes(array('department_id'=>$department_id));
+        $tmpData = array();
+        $b = array();
+        $index = 1;
+        $obj = new stdClass();
+        $obj->division_id ="";
+        $obj->division_name = " ----- เลือกส่วนงาน ----- ";
+        array_push($b, $obj);
         foreach ($div as $tmpItem) {
             $obj = new stdClass();
             $obj->index = $index++;

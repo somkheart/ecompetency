@@ -57,13 +57,18 @@ class CompetencyAssessment extends CActiveRecord
 	{
 		return array(
 			'ass_id' => 'Ass',
-			'usercode' => 'Usercode',
-			'position_name' => 'Position Name',
+			'usercode' => ' รหัสเจ้าหน้าที่ ',
+			'position_name' => ' ตำแหน่ง ',
 			'status' => 'Status',
-			'group_id' => 'Group',
-			'department_id' => 'Department',
-			'division_id' => 'Division',
-			'topic_id' => 'Topic',
+			'group_id' => ' กลุ่มงาน ',
+			'department_id' => ' ฝ่าย ',
+			'division_id' => ' ส่วนงาน ',
+			'topic_id' => ' หัวข้อการประเมิน ',
+                        'position_id'=>' ตำแหน่ง ',
+                        'level'=>'ระดับ',
+                        'function_id'=>'Functional Competency ',
+                        'core_flag'=>'Core Competency ',
+                        'manage_flag'=>'Managerial Competency '
 		);
 	}
 

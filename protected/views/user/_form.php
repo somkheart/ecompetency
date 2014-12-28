@@ -6,33 +6,61 @@
 <script>
     $(document).ready(function () {
 
+        $("#User_department_id,#User_position_code,#User_group_id,#User_division_id").kendoComboBox();
         $("#User_group_id").change(function ()
         {
-            var group_id = $(this).val();
-            var url = "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/department/loadDivision/group_id/" + group_id;
-            alert(url);
-            $.ajax({url: url,
-                success: function (result) {
-                    $("#groupBox").html(result);
-                }});
-        });
+                    var group_id=$(this).val();
+                    var url = "";
+                    url = "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/department/ListByGroup/group_id/" + group_id;
+                    var departmentSource = new kendo.data.DataSource({
+                    transport:  {
+                    read: {
+                    url: url,
+                            dataType: "json",
+                    }
+                    },
+                            schema: {
+                            data: "data"
+                            }
+                    });
+                $("#User_department_id").kendoComboBox({
+                    dataTextField:  "department_name",
+                    dataValueField: "department_id",
+                    dataSource: departmentSource,
+        
+                });
+            });
+            $("#User_department_id").change(function(){
+                
+                  var department_id=$(this).val();
+                    var url = "";
+                    url = "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/division/DivisionByDaprtment/department_id/" + department_id;
+ 
+                    var divisionSource = new kendo.data.DataSource({
+                    transport:  {
+                    read: {
+                    url: url,
+                            dataType: "json",
+                    }
+                    },
+                            schema: {
+                            data: "data"
+                            }
+                    });
+                $("#User_division_id").kendoComboBox({
+                    dataTextField: "division_name",
+                    dataValueField: "division_id",
+                    dataSource: divisionSource,
+                });
+            });
 
+    });
+    function loadData(group_id, department_id)
+    {
 
-        $("#User_department_id").change(function ()
-        {
-            alert("change");
-            var group_id = $("#User_group_id").val();
-            var department_id = $("#User_department_id").val();
-            var url = "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/division/loadDivision/group_id/" + group_id + "/department_id/"
-            department_id;
-            alert(url);
-            $.ajax({url: url,
-                success: function (result) {
-                    $("#divisionbox").html(result);
-                }});
-        });
+    }
+</script>
 
-    });</script>
 <div class="form">
 
     <?php
@@ -165,9 +193,12 @@
         <?php echo $form->textField($model, 'lastLoginTime', array('size' => 60, 'maxlength' => 255, 'class' => 'k-input k-textbox', 'style' => 'width:200px')); ?>
         <?php echo $form->error($model, 'lastLoginTime'); ?>
     </div>
-    <div class="row buttons"  style="padding:10px;">
+    <div class="row buttons"  style="padding:10px;text-align: center;">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'สร้าง' : 'บันทึก', array('class' => 'k-button')); ?>
+        <?php echo CHtml::resetButton('ยกเลิก', array('class' => 'k-button')); ?>
     </div>
     <?php $this->endWidget(); ?>
 
-</div><!-- form -->
+</div>
+
+<!-- form -->

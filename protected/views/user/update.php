@@ -16,6 +16,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Update User <?php echo $model->usercode; ?></h1>
+<h1 style="display: none">Update User <?php echo $model->usercode; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
