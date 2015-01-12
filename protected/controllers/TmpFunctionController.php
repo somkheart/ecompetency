@@ -58,6 +58,7 @@ class TmpFunctionController extends Controller {
         foreach ($functional as $tmpItem) {
             $obj = new stdClass();
             $obj->usercode = $tmpItem->usercode;
+            $obj->tmp_id=$tmpItem->tmp_id;
             $obj->function_name = $tmpItem->function_name;
             $obj->dic1 = $tmpItem->dic1;
             $obj->dic2 = $tmpItem->dic2;
@@ -89,7 +90,7 @@ class TmpFunctionController extends Controller {
         $data = json_decode($models);
         $tmpObject = $data[0];
         $usercode=Yii::app()->user->id;
-         $tmp_id =0;
+        $tmp_id=$tmpObject->tmp_id;
         $function_name = $tmpObject->function_name;
         $dic1=$tmpObject->dic1;
         $dic2=$tmpObject->dic2;
@@ -100,7 +101,7 @@ class TmpFunctionController extends Controller {
         
         $model = new TmpFunction;
         $model->attributes = $tmpObject;
-         $model->tmp_id = $tmp_id;
+        $model->tmp_id = $tmp_id;
         $model->function_name = $function_name;
         $model->dic1 = $tmpObject->dic1;
         $model->dic2 = $dic2;
@@ -111,7 +112,7 @@ class TmpFunctionController extends Controller {
         $b = array();
         if ($model->save()) {
             $obj = new stdClass();
-          //  $obj->tmp_id = $tmp_id;
+            $obj->tmp_id = $tmp_id;
             $obj->function_name = $function_name;
             $obj->dic1=$dic1;
             $obj->dic2=$dic2;
@@ -185,12 +186,16 @@ class TmpFunctionController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id) {
+    public function actionDelete() {
+        $models = $_GET['models'];
+        $data = json_decode($models);
+        $tmpObject = $data[0];
+        $id=$tmpObject->tmp_id;
         $this->loadModel($id)->delete();
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+       // if (!isset($_GET['ajax']))
+        //    $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
     /**

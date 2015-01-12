@@ -13,6 +13,6 @@ $this->menu=array(
 );
 ?>
 
-<h1>Create Department</h1>
+<h1>เพิ่มฝ่าย</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

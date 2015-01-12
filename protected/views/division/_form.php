@@ -3,23 +3,8 @@
 /* @var $model Division */
 /* @var $form CActiveForm */
 ?>
-<script>
-    $(document).ready(function () {
 
-        $("#Division_group_id").change(function ()
-        {
-            var group_id = $("#Division_group_id").val();
-            var url = "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/department/loadDivision/group_id/" + group_id;
-          //  alert(url);
-            $.ajax({url: url,
-                success: function (result) {
-                    $("#groupBox").html(result);
-                }});
-        }
-        );
-    });</script>
 <div class="form">
-
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'division-form',
@@ -36,10 +21,9 @@
     <?php echo $form->errorSummary($model); 
     if(empty($model->status))
     {
-    $model->status=1;
+            $model->status=1;
     }
     ?>
-
     <div class="row" style="padding:10px">
         <?php echo $form->labelEx($model, 'division_name'); ?>
         <?php echo $form->textField($model, 'division_name', array('size' => 30, 'maxlength' => 255)); ?>
@@ -48,13 +32,13 @@
     <div class="row" style="padding:10px">
         <?php echo $form->labelEx($model, 'group_id'); ?>
         <?php
-        echo $form->dropDownList($model, "group_id", CHtml::listData(Workgroup::model()->findAll(), "group_id", "group_name"), array('style' => 'width:220px', 'style' => 'width:220px'));
+        echo $form->dropDownList($model, "group_id", CHtml::listData(Workgroup::model()->findAll(), "group_id", "group_name"), array('style' => 'width:220px', 'style' => 'width:220px','empty'=>'---- เลือกกลุ่มงาน ---- '));
         ?>
     </div>
     <div class="row" style="padding:10px">
         <?php echo $form->labelEx($model, 'department_id'); ?>
         <span id="groupBox">
-            <?php echo $form->dropDownList($model, "department_id", CHtml::listData(Department::model()->findAll(), "department_id", "department_name")); ?>
+            <?php echo $form->dropDownList($model, "department_id", CHtml::listData(Department::model()->findAll(), "department_id", "department_name"),array('empty'=>'เลือกฝ่าย')); ?>
         </span>
         <?php echo $form->error($model, 'department_id'); ?>
     </div>

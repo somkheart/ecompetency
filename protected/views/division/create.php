@@ -6,11 +6,14 @@ $this->breadcrumbs=array(
 	'Divisions'=>array('index'),
 	'Create',
 );
-
+/*
 $this->menu=array(
 	array('label'=>'List Division', 'url'=>array('index')),
 	array('label'=>'Manage Division', 'url'=>array('admin')),
 );
+ * 
+ * 
+ */
 ?>
 
 <h1>เพิ่มส่วนงาน</h1>

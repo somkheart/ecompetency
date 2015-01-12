@@ -59,6 +59,8 @@ class DivisionController extends Controller {
             $obj->index = $index++;
             $obj->division_id = $tmpItem->division_id;
             $obj->division_name = $tmpItem->division_name;
+            $obj->department_name= Department::model()->findByPk($tmpItem->department_id)->department_name;
+            $obj->group_name=  Workgroup::model()->findByPk($tmpItem->group_id)->group_name;
             array_push($b, $obj);
         }
         echo json_encode(array("data" => $b));
@@ -68,10 +70,7 @@ class DivisionController extends Controller {
         $tmpData = array();
         $b = array();
         $index = 1;
-        $obj = new stdClass();
-        $obj->division_id ="";
-        $obj->division_name = " ----- เลือกส่วนงาน ----- ";
-        array_push($b, $obj);
+
         foreach ($div as $tmpItem) {
             $obj = new stdClass();
             $obj->index = $index++;
@@ -109,8 +108,9 @@ class DivisionController extends Controller {
      * @param integer $id the ID of the model to be displayed
      */
     public function actionView($id) {
+        $model=$this->loadModel($id);
         $this->render('view', array(
-            'model' => $this->loadModel($id),
+            'model' => $model,
         ));
     }
 
@@ -207,7 +207,15 @@ class DivisionController extends Controller {
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
     }
-
+    public  function LoadDepartment($id)
+    {
+        $deptModel= Department::model()->findByPk($id);
+        return $deptModel;
+    }
+    public function loadWorkgroup($id) {
+       $WorkgroupModel=  Workgroup::model()->findByPk($id);
+       return $WorkgroupModel;
+    }
     /**
      * Performs the AJAX validation.
      * @param Division $model the model to be validated

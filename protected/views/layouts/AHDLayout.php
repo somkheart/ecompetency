@@ -79,7 +79,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         <div id="managerialgrid" hidden="true"></div>
                         <div id="competencytopic" hidden="true"></div>
                         <div id="functionalgrid" hidden="true">
-                            <div class="k-toolbar k-grid-toolbar"><input style="" type="button" value="+ เพิ่มเจ้าหน้าที่ใหม่ " class="k-button k-button-icontext k-grid-add" onclick="window.location = '<?php echo Yii::app()->getBaseUrl(true); ?>/comptencyFunctional/create'"/></div>
+                            <div class="k-toolbar k-grid-toolbar"><input style="" type="button" value="+ เพิ่มรายการ " class="k-button k-button-icontext k-grid-add" onclick="window.location = '<?php echo Yii::app()->getBaseUrl(true); ?>/comptencyFunctional/create'"/></div>
                         </div>
                         <div id="departmentgrid" hidden="true"></div>
                         <div id="divisiongrid" hidden="true">
@@ -113,9 +113,46 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                     </div>
                 </div>
             </div>
+            <style>
+               
+                .k-edit-form-container 
+                {
+                    width: 600px;
+                }
+            </style>
             <script>
                 $(document).ready(function () {
                     $("#menu").kendoMenu();
+                    $("#Division_department_id,#Division_group_id").kendoDropDownList();
+                    $("#Division_department_id").change(function(){
+                      //  alert('test');
+                    });
+                    
+                    $("#Division_group_id").change(function(){
+                        var group_id=$(this).val();
+                        var url="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/department/ListByGroup/group_id/"+group_id;
+                        $("#Division_department_id").kendoDropDownList({
+                            dataTextField: "department_name",
+                            dataValueField: "department_id",
+                            dataSource: new kendo.data.DataSource(
+                                        {
+                                        batch: true,
+                                        transport: {
+                                          read:  {
+                                                        type: "POST",
+                                                        url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/department/ListByGroup/group_id/"+group_id,
+                                                        contentType: "application/json; charset=utf-8",
+                                                        dataType: "json"
+                                          }
+                                        },
+                                        schema: {
+                                          data: "data",
+                                          model: { id: "department_id" }
+                                        }
+                                      })
+                        });
+                    });
+              //  $("#Division_group_id").change();
                 });</script>
             <script>
                 var compentencyName = "";
@@ -126,6 +163,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                 init();
                 $("#split").kendoSplitter({
                     orientation: "horizontal"
+                    
                 });
                 $("#add-assessment").kendoButton();
                 function hidegrid()
@@ -354,7 +392,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         ]
                     });
                     $("#treeview-left").kendoTreeView({
-                        //  height:"600px",
+                      // height:"600px",
                         dataSource: inlineDefault,
                         select: onSelect
                     });
@@ -363,7 +401,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             {collapsible: true, size: "220px"},
                             {collapsible: false}
                         ]
-                    });
+                    }); 
                     var centralSource = new kendo.data.DataSource({
                         transport: {
                             read: {
@@ -395,7 +433,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             }
                         }
                     });
-
+                    
                     var dataSource = new kendo.data.DataSource({
                         transport: {
                             read: {
@@ -427,6 +465,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             }
                         }
                     });
+                    
                     var positionSource = new kendo.data.DataSource({
                         transport: {
                             read: {
@@ -449,6 +488,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                                 }
                             }
                         },
+                        cache:true,
                         batch: true,
                         schema: {
                             data: "data",
@@ -573,12 +613,12 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             model: {
                                 id: "tmp_id",
                                 fields: {
-                                    tmp_id: {type: "string"},
                                     function_name: {type: "string"},
-                                    dic1: {type: "string"},
-                                    dic2: {type: "string"},
-                                    dic3: {type: "string"},
-                                    dic4: {type: "string"},
+                                    tmp_id:{type:"string"},
+                                    dic1: {type: "string", validation: {required: true}},
+                                    dic2: {type: "string", validation: {required: true}},
+                                    dic3: {type: "string",validation: {required: true}},
+                                    dic4: {type: "string", validation: {required: true}},
                                     dic5: {type: "string", validation: {required: true}}
 
                                 }
@@ -591,8 +631,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         // height: 550,
                         toolbar: ["create"],
                         columns: [
-                            {field: "tmp_id", visible: false},
-                            {field: "function_name", title: "Functional Competencies "},
+                            {field: "function_name", title: "Functional Competencies ",width:"300px"},
                             {field: "dic1", title: "ระดับ 1 ", editor: textareaEditor, template: "#= dic1 #"},
                             {field: "dic2", title: "ระดับ 2 ", editor: textareaEditor, template: "#= dic2 #"},
                             {field: "dic3", title: "ระดับ 3 ", editor: textareaEditor, template: "#= dic3 #"},
@@ -601,8 +640,66 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}],
                         editable: "popup"
                     });
+                    var funclistupdateSource = new kendo.data.DataSource({
+                        transport: {
+                            read: {
+                                type: "POST",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/tmpFunction/Read",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json"
+                            },
+                            create: {
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/tmpFunction/create",
+                                dataType: "json"
+                            },
+                            update: {
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/tmpFunction/update",
+                                dataType: "json"
+                            },
+                            destroy: {
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/tmpFunction/delete",
+                            },
+                            parameterMap: function (options, operation) {
+                                if (operation !== "read" && options.models) {
+                                    return {models: kendo.stringify(options.models)};
+                                }
+                            }
+                        },
+                        batch: true,
+                        schema: {
+                            data: "data",
+                            model: {
+                                id: "tmp_id",
+                                fields: {
+                                    function_name: {type: "string"},
+                                    dic1: {type: "string" },
+                                    dic2: {type: "string"},
+                                    dic3: {type: "string"},
+                                    dic4: {type: "string"},
+                                    dic5: {type: "string", validation: {required: true}}
+
+                                }
+                            }
+                        }
+                    });
+                     $("#funclistupdate").kendoGrid({
+                        dataSource: funclistupdateSource,
+                        pageable: true,
+                        // height: 550,
+                        toolbar: ["create"],
+                        columns: [
+                            {field: "function_name", title: "Functional Competencies ",width:"300px"},
+                            {field: "dic1", title: "ระดับ 1 ", editor: textareaEditor, template: "#= dic1 #"},
+                            {field: "dic2", title: "ระดับ 2 ", editor: textareaEditor, template: "#= dic2 #"},
+                            {field: "dic3", title: "ระดับ 3 ", editor: textareaEditor, template: "#= dic3 #"},
+                            {field: "dic4", title: "ระดับ 4 ", editor: textareaEditor, template: "#= dic4 #"},
+                            {field: "dic5", title: "ระดับ 5 ", editor: textareaEditor, template: "#= dic5 #"},
+                            {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}],
+                        editable: "popup"
+                    });
+                    
                     function textareaEditor(container, options) {
-                        $('<textarea data-bind="value: ' + options.field + '" cols="20" rows="4"></textarea>').appendTo(container);
+                        $('<textarea data-bind="value: ' + options.field + '" cols="50" rows="15"></textarea>').appendTo(container);
                     }
                     $("#grid").kendoGrid({
                         dataSource: dataSource,
@@ -772,12 +869,15 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         scrollable: true,
                         sortable: true,
                         pagination: true,
+                        cache:false,
                         filterable: {
                             mode: "row"
                         },
                         //   toolbar: ["create"],
                         columns: [
                             {field: "index", title: "ลำดับ", width: "80px"},
+                            {field: "group_name",title:"กลุ่มงาน",width:"100px"},
+                            {field: "department_name",title:"ฝ่าย",width:"220px"},
                             {field: "division_name", title: "ส่วนงาน"},
                             {field: "division_name", title: "แก้ไข", template: '<a href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/division/update/#= division_id #" class="k-button link">แก้ไข</a>', width: "100px"},
                             {command: ["destroy"], title: "&nbsp;", width: "180px"}
@@ -824,7 +924,19 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
                             },
+                            destroy :{
+                               // type:"POST",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/ComptencyFunctional/delete",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json"
+                            },
+                            parameterMap: function (options, operation) {
+                                if (operation !== "read" && options.models) {
+                                    return {models: kendo.stringify(options.models)};
+                                }
+                            }     
                         },
+                        batch:true,
                         schema: {
                             data: "data",
                             model: {
@@ -863,10 +975,12 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                                         type: "odata",
                                         transport: {
                                             read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
+                                          
                                         }
                                     }
                                 });
                     }
+                    
                     $("#functionalgrid").kendoGrid({
                         dataSource: functionalSource,
                         pageSize: 20,
@@ -877,11 +991,13 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             mode: "row"
                         },
                         //   toolbar: ["create"],
+                       
                         columns: [
                             {field: "function_name", title: "Functional Competency Topic "},
+                            {field: "function_id",title:"แก้ไข",template:'<a href="<?php echo Yii::app()->getBaseUrl(); ?>/comptencyFunctional/update/#= function_id #"><span class=\"k-button\">แก้ไข</span></a>',width:"100px"},
                             //  {field: "function_status", title: "สถานะ", editor: categoryDropDownEditor, template: '#= function_id #', width: "100px"},
                             // {field: "function_id", title: "รายละเอียด", editable: false, template: '<a href="\<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/ComptencyFunctional/update/#= function_id #" class="k-button link">รายละเอียด</a>', width: "100px"},
-                            {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}
+                            {command: ["destroy"], title: "&nbsp;", width: "100px"}
                         ],
                         editable: "popup"
                     });
@@ -1002,6 +1118,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         dataSource: personDataSource,
                         //s  change: onChange
                     });
+                    /*
                     $("#treeview-employee-left").kendoTreeView({
                         dragAndDrop: true,
                         dataSource: [
@@ -1016,6 +1133,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             {text: "นางสาวรุ้งจะวัน ลายเมฆ"}
                         ]
                     });
+                    
                     $("#treeview-employee-right").kendoTreeView({
                         dragAndDrop: true,
                         height: 550,
@@ -1087,7 +1205,10 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                                     {text: "ผู้ใต้บังคับบัญชาคนที่ 2"}]}
                         ]
                     });
+                    */
                 });
+              //  $("#Division_department_id,#Division_group_id").kendoDropDownList();
+              //  $("#Division_group_id").change();
                 $(".TextButton").kendoButton({
                     // spriteCssClass: "k-icon k-i-refresh"
                 });

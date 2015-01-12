@@ -1,11 +1,13 @@
 <?php
 /* @var $this DivisionController */
 /* @var $model Division */
-
+/*
 $this->breadcrumbs=array(
 	'Divisions'=>array('index'),
 	$model->division_id,
 );
+ * 
+ */
 /*
 $this->menu=array(
 	array('label'=>'List Division', 'url'=>array('index')),
@@ -18,14 +20,14 @@ $this->menu=array(
  */
 ?>
 
-<h1>ข้อมูลส่วนงาน #<?php echo $model->division_id; ?></h1>
+<h1>ข้อมูลส่วนงาน</h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'division_name',
-		'status',
-		'department_name',
-		'group_id',
+	//	'status',
+	//	'department_name',
+	//	'group_id',
 	),
 )); ?>

@@ -52,6 +52,7 @@ class CompetencyFunctionListController extends Controller
 	}
         public function actionRead()
         {
+            
             $functional = CompetencyFunctionList::model()->findAll();
             $tmpData = array();
             $b = array();
@@ -98,7 +99,6 @@ class CompetencyFunctionListController extends Controller
 			'model'=>$model,
 		));
 	}
-
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -107,7 +107,7 @@ class CompetencyFunctionListController extends Controller
 	public function actionUpdate($id)
 	{
                 $list=$_SESSION['tmp_function'];
-                $list=array('xx','ssss');
+               
 		$_SESSION['tmp_function']=$list;
                 $model=$this->loadModel($id);
                 

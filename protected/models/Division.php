@@ -28,6 +28,8 @@ class Division extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+                        array('group_id','required'),
+                        array('department_id','required'),
 			array('status, department_id, group_id', 'numerical', 'integerOnly'=>true),
 			array('division_name', 'length', 'max'=>255),
 			// The following rule is used by search().

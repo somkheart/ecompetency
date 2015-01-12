@@ -20,7 +20,7 @@ class SiteController extends Controller {
             ),
             array('allow',
                 'actions'=>array('index','page'), // กำหนดสิทธิ์เข้าใช้งาน actionContact
-                'expression'=>'AccessControl::check_access(array(1,2))', // ได้เฉพาะ group 1 และ 2 เท่านั่น
+                'expression'=>'AccessControl::isAHD()', // ได้เฉพาะ group 1 และ 2 เท่านั่น
             ),
             array('deny',
                 'users'=>array('*'),

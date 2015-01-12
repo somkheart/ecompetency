@@ -77,6 +77,10 @@ class DepartmentController extends Controller {
         $tmpData = array();
         $b = array();
         $index = 1;
+        $obj = new stdClass();
+            $obj->department_id ="";
+            $obj->department_name = " กรุณาเลือกฝ่าย ";
+            array_push($b, $obj);
         foreach ($department as $tmpItem) {
             $obj = new stdClass();
             $obj->department_id = $tmpItem->department_id;

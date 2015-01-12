@@ -26,6 +26,7 @@ class Department extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+                        array('group_id','required'),
 			array('group_id', 'numerical', 'integerOnly'=>true),
 			array('department_name', 'length', 'max'=>255),
 			// The following rule is used by search().

@@ -113,8 +113,9 @@ class ComptencyFunctionalController extends Controller
                             }
                             TmpFunction::model()->deleteAllByAttributes(array('usercode'=>$usercode));
                         }
+                        $this->redirect(array('success'));
 		}
-               
+    
 		$this->render('create',array(
 			'model'=>$model,'flModel'=>$flModel
 		));
@@ -125,25 +126,24 @@ class ComptencyFunctionalController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate()
+	public function actionUpdate($id)
 	{
           
-               $id=1;
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
+                
 		if(isset($_POST['ComptencyFunctional']))
 		{
 			$model->attributes=$_POST['ComptencyFunctional'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->function_id));
+                              $this->redirect(array('success'));
+				//$this->redirect(array('view','id'=>$model->function_id));
 		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
+                $flModel=  CompetencyFunctionList::model()->findByAttributes(array('function_id'=>$id));
+      
+		$this->render('update',array('model'=>$model,'funclist'=>$flModel));
 	}
 
 	/**
@@ -151,15 +151,38 @@ class ComptencyFunctionalController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	public function actionDelete()
 	{
-		$this->loadModel($id)->delete();
-
+                $models = $_GET['models'];
+                $data = json_decode($models);
+                $tmpObject = $data[0];  
+                $function_id = $tmpObject->function_id;
+                $function_name = $tmpObject->function_name;
+                $model = $this->loadModel($function_id);
+                $model->attributes = $function_id;
+                $model->function_id = $function_id;     
+                $model->function_status=0;
+                $b = array();
+           //   $this->loadModel($function_id)->delete();
+                if ($model->save()) {
+                        $obj = new stdClass();
+                        $obj->function_id = $function_id;
+                        $obj->function_name = $function_name;
+                        $obj->status=0;
+                        array_push($b, $obj);
+                        echo json_encode(array("data" => $b));
+                } else {
+                        echo json_encode(array("data" => array()));
+                }
+                    exit();
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		//if(!isset($_GET['ajax']))
+		//	$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
-
+        public function actionSuccess() {
+            $this->render('success');
+            
+        }
 	/**
 	 * Lists all models.
 	 */

@@ -18,14 +18,14 @@ $this->menu=array(
 
 ?>
 
-<h1>View ComptencyFunctional #<?php echo $model->function_id; ?></h1>
+<h1>รายละเอียด</h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'function_id',
+		//'function_id',
 		'function_name',
-		'function_status',
-		'function_type',
+		//'function_status',
+		//'function_type',
 	),
 )); ?>

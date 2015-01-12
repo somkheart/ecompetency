@@ -5,11 +5,13 @@
 $this->breadcrumbs=array(
 	'Divisions',
 );
-
+/*
 $this->menu=array(
 	array('label'=>'Create Division', 'url'=>array('create')),
 	array('label'=>'Manage Division', 'url'=>array('admin')),
 );
+ * 
+ */
 ?>
 
 <h1>Divisions</h1>

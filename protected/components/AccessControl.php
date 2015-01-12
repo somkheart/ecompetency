@@ -7,13 +7,13 @@
  */
 
 class AccessControl extends CApplicationComponent {
-    public static function check_access($group){
+    public static function isAHD(){
         if(Yii::app()->user->id){
-                $model = CompetencyAdmin::model()->findByAttributes(array('usercode'=>Yii::app()->user->id));
+                $model = CompetencyAdmin::model()->find('usercode=:usercode', array('usercode' =>Yii::app()->user->id));
                 if(!$model){
-                   return true;
-                }else{
                    return false;
+                }else{
+                   return true;
                 }
         }else{
             return false;
