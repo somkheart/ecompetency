@@ -44,7 +44,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                 <li style="float:right;">
                     <a href="<?php echo Yii::app()->request->baseUrl; ?>/site/logout">ออกจากระบบ</a>
                 </li>
-                <li style="width:450px;float:right;text-align:right;">เจ้าหน้าที่ AHD :<?php echo Yii::app()->user->getName(); ?></li>
+                <li style="width:450px;float:right;text-align:right;">เจ้าหน้าที่ AHD : <?php echo Yii::app()->user->getName(); ?></li>
             </ul>
             <div id="horizontal" style="height: 500px; width: 100%;" data-role="splitter">
                 <div id="left-pane">
@@ -89,7 +89,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             <div class="k-toolbar k-grid-toolbar"><a class="k-button k-button-icontext k-grid-add-tmp" href="<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/CompetencyAssessment/create"><span class="k-icon k-add"></span>เพิ่มการประเมิน</a></div>
                         </div>
                         <div class="demo-section k-content">
-                            <div id="chart" hidden="true"></div>
+                            <div id="chart" hidden="true" style="width: 80%;height: 60%"></div>
                         </div>
                         <div class="demo-section-xx" id="split" style="height: 500px; width: 100%;" >
                             <div class="box-col" >
@@ -259,8 +259,8 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         $('#employeeGrid').show();
                     }
                     else if (selected == "1.Competency Evalution Result") {
-                        $("#graphCombo").show();
-                        $("#assignCombo").show();
+                       // $("#graphCombo").show();
+                        //$("#assignCombo").show();
                         $("#chart").show();
                     }
 
@@ -530,7 +530,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             //{field: "index", title: "ลำดับ", width: "80px"},
                             {field: "position_code", title: "รหัส", width: "150px"},
                             {field: "position_name", title: "ตำแหน่ง"},
-                            {field: "level", title: "ระดับ", width: "100px", attributes: {class: "center"}},
+                         //   {field: "level", title: "ระดับ", width: "100px", attributes: {class: "center"}},
                             {command: ["edit", "destroy"], title: "&nbsp;", width: "200px"}],
                         editable: "inline"
                     });
@@ -575,7 +575,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         dataSource: TopicdataSource,
                         pageable: true,
                         // height: 550,
-                        toolbar: ["create"],
+                       // toolbar: ["create"],
                         columns: [
                             {field: "topic_name", title: "หัวข้อ"},
                             {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}],
@@ -640,24 +640,14 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                             {command: ["edit", "destroy"], title: "&nbsp;", width: "180px"}],
                         editable: "popup"
                     });
+               
                     var funclistupdateSource = new kendo.data.DataSource({
                         transport: {
                             read: {
                                 type: "POST",
-                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/tmpFunction/Read",
+                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/CompetencyFunctionList/Read",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json"
-                            },
-                            create: {
-                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/tmpFunction/create",
-                                dataType: "json"
-                            },
-                            update: {
-                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/tmpFunction/update",
-                                dataType: "json"
-                            },
-                            destroy: {
-                                url: "<?php echo Yii::app()->getBaseUrl(true); ?>/tmpFunction/delete",
                             },
                             parameterMap: function (options, operation) {
                                 if (operation !== "read" && options.models) {
@@ -994,7 +984,7 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                        
                         columns: [
                             {field: "function_name", title: "Functional Competency Topic "},
-                            {field: "function_id",title:"แก้ไข",template:'<a href="<?php echo Yii::app()->getBaseUrl(); ?>/comptencyFunctional/update/#= function_id #"><span class=\"k-button\">แก้ไข</span></a>',width:"100px"},
+                            {field: "function_id",title:"รายละเอียด",template:'<a href="<?php echo Yii::app()->getBaseUrl(); ?>/comptencyFunctional/update/#= function_id #"><span class=\"k-button\">แก้ไข</span></a>',width:"100px"},
                             //  {field: "function_status", title: "สถานะ", editor: categoryDropDownEditor, template: '#= function_id #', width: "100px"},
                             // {field: "function_id", title: "รายละเอียด", editable: false, template: '<a href="\<?php echo Yii::app()->getBaseUrl(true); ?>/index.php/ComptencyFunctional/update/#= function_id #" class="k-button link">รายละเอียด</a>', width: "100px"},
                             {command: ["destroy"], title: "&nbsp;", width: "100px"}
@@ -1034,12 +1024,11 @@ $functional_url = "$baseURL/ComptencyFunctional/index";
                         //   toolbar: ["create"],
                         columns: [
                             {field: "usercode", title: "รหัสเจ้าหน้าที่", width: "150px"},
-                            {field: "fullname", title: "ชื่อ-นามสกุล"},
-                            {field: "position_name", title: " ตำแหน่ง ", width: "150px", editor: positionDropDownEditor},
-                            {field: "group_name", title: " กลุ่มงาน ", width: "150px"},
-                            {field: "department_name", title: " ฝ่าย "},
-                            {field: "division_name", title: " ส่วนงาน "},
-                            {field: "ass_id", title: " เพิ่มผู้ประเมิน ",template:"<a href=''><span   style=\"text-align:center\" class=\"k-button\">เพิ่มผู้ประเมิน</span></a>",editable:false},
+                            {field: "fullname", title: "ชื่อ-นามสกุล",width:"200px"},
+                            {field: "position_name", title: " ตำแหน่ง ", editor: positionDropDownEditor},
+                            {command: ["destroy"], title: "&nbsp;", width: "100px"}
+                            //{field: "fullname", title: "ลบ",width:"100px",template:"<a><span class='k-button' >ลบข้อมูล</span></a>"},
+                           // {field: "ass_id", title: " เพิ่มผู้ประเมิน ",template:"<a href=''><span   style=\"text-align:center\" class=\"k-button\">เพิ่มผู้ประเมิน</span></a>",editable:false},
 
                         ],
                         editable: "popup"

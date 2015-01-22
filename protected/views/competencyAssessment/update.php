@@ -8,12 +8,15 @@ $this->breadcrumbs=array(
 	'Update',
 );
 
+/*
 $this->menu=array(
 	array('label'=>'List CompetencyAssessment', 'url'=>array('index')),
 	array('label'=>'Create CompetencyAssessment', 'url'=>array('create')),
 	array('label'=>'View CompetencyAssessment', 'url'=>array('view', 'id'=>$model->ass_id)),
 	array('label'=>'Manage CompetencyAssessment', 'url'=>array('admin')),
 );
+ * 
+ */
 ?>
 
 <h1>แก้ไขผู้ประเมิน <?php echo $model->ass_id; ?></h1>

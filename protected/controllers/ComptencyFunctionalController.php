@@ -59,7 +59,7 @@ class ComptencyFunctionalController extends Controller
                 $obj = new stdClass();
                 $obj->function_id =$tmpItem->function_id;
                 $obj->function_name = $tmpItem->function_name;
-                $obj->function_type = $tmpItem->function_type;
+               // $obj->function_type = $tmpItem->function_type;
                 $obj->index = $index++;
                 array_push($b, $obj);
             }
@@ -96,6 +96,7 @@ class ComptencyFunctionalController extends Controller
                         $model->function_status=1;
 			if($model->save()){
                            
+                            
                             foreach ($tmpModel as $item)
                             {
                                 $obj=new CompetencyFunctionList;
@@ -141,8 +142,8 @@ class ComptencyFunctionalController extends Controller
                               $this->redirect(array('success'));
 				//$this->redirect(array('view','id'=>$model->function_id));
 		}
-                $flModel=  CompetencyFunctionList::model()->findByAttributes(array('function_id'=>$id));
-      
+                $flModel=  CompetencyFunctionList::model()->findAll(array('condition'=>"function_id=$id"));
+                
 		$this->render('update',array('model'=>$model,'funclist'=>$flModel));
 	}
 

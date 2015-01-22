@@ -63,33 +63,31 @@ class CompetencyAssessmentController extends Controller
                 $obj->usercode = $tmpObject->usercode;
                 $obj->position_name=$tmpObject->position_name;
                 $obj->status=$tmpObject->status;
-                $obj->group_id=$tmpObject->group_id;
-                $obj->department_id=$tmpObject->department_id;
-                $obj->division_id=$tmpObject->division_id;
                 $obj->topic_id=$tmpObject->topic_id;
                 $obj->position_id=$tmpObject->position_id;
-                $obj->level=$tmpObject->level;
                 $usercode=$tmpObject->usercode;
                 $tmpUser=User::model()->findByPk($usercode);
-                $tmpName=$tmpUser->firstname_th . " " .$tmpUser->lastname_th;
-                $position_code=$tmpUser->position_code;
+                if($tmpUser!=null){
+                    $tmpName=$tmpUser->firstname_th . " " .$tmpUser->lastname_th;
+                    $position_code=$tmpUser->position_code;
+                }else
+                {
+                    $tmpName="Not Found in Database";
+                    $position_code=" Not Found in database";
+                }
+                    
                 
                 // ตำแหน่ง 
                 $tmpPosition= UserPosition::model()->find('position_code=:position_code',array('position_code'=>$position_code));
-                $obj->position_name=$tmpPosition->position_name;
-                $obj->fullname=$tmpName;
+                if($tmpPosition!=null){
+                    $obj->position_name=$tmpPosition->position_name;
+                    $obj->fullname=$tmpName;
+                }else{
+                    $obj->position_name="";
+                    $obj->fullname="";
+                }
                 
-                // กลุ่มงาน
-                $tmpGroup= Workgroup::model()->find('group_type=:group_type',array('group_type'=>$tmpObject->group_id));
-                $obj->group_name=$tmpGroup->group_name;
-                
-                // ฝ่าย
-                $tmpDepartment= Department::model()->find('department_id=:department_id',array('department_id'=>$tmpObject->department_id));
-                $obj->department_name=$tmpDepartment->department_name;
-                
-                // ส่วนงาน
-                $tmpDivision= Division::model()->find('division_id=:division_id',array('division_id'=>$tmpObject->division_id));
-                $obj->division_name=$tmpDivision->division_name;
+               
                 
 
                 array_push($b, $obj);
@@ -113,16 +111,34 @@ class CompetencyAssessmentController extends Controller
 	 */
 	public function actionCreate()
 	{
+          
 		$model=new CompetencyAssessment;
-
+                
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['CompetencyAssessment']))
 		{
-			$model->attributes=$_POST['CompetencyAssessment'];
-			if($model->save())
+                    
+                      
+                   	$model->attributes=$_POST['CompetencyAssessment'];
+                        $model->topic_id=1;
+                    //    $model->position_id=$_POST
+			if($model->save()){
 				$this->redirect(array('view','id'=>$model->ass_id));
+                                
+                              //  $userlist=array('571007','571012','571003','521004','521005','521010');
+                                foreach($userlist as $tmpUser)
+                                {
+                                    $obj=new CompetencyAssessor();
+                                    $obj->topic_id=1;
+                                    $obj->usercode=$tmpUser;
+                                    $obj->assessor_user="571007";
+                                    $obj->status=0; 
+                                    $obj->save();
+                                }
+                              
+                        }
 		}
 
 		$this->render('create',array(

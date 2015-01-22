@@ -30,16 +30,19 @@ $user_id=Yii::app()->user->getId();
                     $index=1;
                     foreach($model as $items)
                          {
+                     //   print_r($items);
                         $usercode=$items["usercode"];
+                        $tmpUser=User::model()->findByAttributes(array('usercode'=>$usercode));
                         $tmpObj=CompetencyAccessorType::model()->findByPk($items["assessor_type"]);
+                        $assessor_id=$items["assessor_id"];
                         
                     ?>
                     <tr>
                         <td style="text-align: center"><?=$index?></td>
                         <td><img src="<?php echo $baseURL; ?>/photo/<?=$usercode?>.jpg" width="70px" height="70px"></td>
-                        <td><?=$usercode?> นางสาว ผกามาศ วงค์สาย</td>
+                        <td><?=$usercode?> <?=$tmpUser->firstname_th?> <?=$tmpUser->lastname_th?></td>
                         <td><?php echo $tmpObj->type_name; ?></td>
-                        <td><a href='<?php echo $baseURL; ?>/ahd/choice/usercode/<?=$usercode?>'  class="iconTextButton">เริ่มประเมิน</a></td>
+                        <td><a href='<?php echo $baseURL; ?>/ahd/choice/<?=$assessor_id?>'  class="iconTextButton">เริ่มประเมิน</a></td>
                     </tr>
                          <?php
                                 $index++;

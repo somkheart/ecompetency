@@ -18,6 +18,7 @@ class CompetencyAssessment extends CActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
+        public $username;
 	public function tableName()
 	{
 		return 'competency_assessment';
@@ -31,8 +32,9 @@ class CompetencyAssessment extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('status, group_id, department_id, division_id, topic_id', 'numerical', 'integerOnly'=>true),
+			array('status, topic_id', 'numerical', 'integerOnly'=>true),
 			array('usercode, position_name', 'length', 'max'=>100),
+          
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('ass_id, usercode, position_name, status, group_id, department_id, division_id, topic_id', 'safe', 'on'=>'search'),
@@ -57,15 +59,12 @@ class CompetencyAssessment extends CActiveRecord
 	{
 		return array(
 			'ass_id' => 'Ass',
-			'usercode' => ' รหัสเจ้าหน้าที่ ',
+			'usercode' => ' รหัสเจ้าหน้าที่ (ผู้ถูกประเมิน ) ',
 			'position_name' => ' ตำแหน่ง ',
 			'status' => 'Status',
-			'group_id' => ' กลุ่มงาน ',
-			'department_id' => ' ฝ่าย ',
-			'division_id' => ' ส่วนงาน ',
 			'topic_id' => ' หัวข้อการประเมิน ',
                         'position_id'=>' ตำแหน่ง ',
-                        'level'=>'ระดับ',
+                        'level_id'=>'ระดับ',
                         'function_id'=>'Functional Competency ',
                         'core_flag'=>'Core Competency ',
                         'manage_flag'=>'Managerial Competency '

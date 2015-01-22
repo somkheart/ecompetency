@@ -6,11 +6,13 @@ $this->breadcrumbs=array(
 	'Competency Assessments'=>array('index'),
 	'Create',
 );
-
+/*
 $this->menu=array(
 	array('label'=>'List CompetencyAssessment', 'url'=>array('index')),
 	array('label'=>'Manage CompetencyAssessment', 'url'=>array('admin')),
 );
+ * 
+ */
 ?>
 
 <h1>เพิ่มผู้ประเมิน</h1>

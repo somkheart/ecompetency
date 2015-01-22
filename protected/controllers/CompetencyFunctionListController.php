@@ -21,7 +21,22 @@ class CompetencyFunctionListController extends Controller
              * 
              */
 	}
-
+        public function Read($id)
+        {
+            $condition = array("condition" => "function_id=$id");
+            $functional = CompetencyFunctionList::model()->findAll($condition);
+            $tmpData = array();
+            $b = array();
+            $index = 1;
+            foreach ($functional as $tmpItem) {
+                $obj = new stdClass();
+                $obj->function_id =$tmpItem->function_id;
+                $obj->flist_name = $tmpItem->flist_name;
+                $obj->index = $index++;
+                array_push($b, $obj);
+            }
+            echo json_encode(array("data" => $b));
+        }
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.

@@ -7,13 +7,15 @@ $this->breadcrumbs=array(
 	$model->usercode=>array('view','id'=>$model->usercode),
 	'Update',
 );
-
+/*
 $this->menu=array(
 	array('label'=>'List User', 'url'=>array('index')),
 	array('label'=>'Create User', 'url'=>array('create')),
 	array('label'=>'View User', 'url'=>array('view', 'id'=>$model->usercode)),
 	array('label'=>'Manage User', 'url'=>array('admin')),
 );
+ * 
+ */
 ?>
 
 <h1 style="display: none">Update User <?php echo $model->usercode; ?></h1>

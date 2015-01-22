@@ -20,6 +20,10 @@ $this->breadcrumbs = array(
     <?php echo CHtml::activeLabel($model, 'function_name'); ?>
     <?php echo CHtml::activeTextField($model, 'function_name', array('size' => 50)); ?>
 </div>
+<div class="row detail" style="padding:10px">
+    <?php echo CHtml::activeLabel($model, 'function_detail'); ?>
+    <?php echo CHtml::activeTextArea($model, 'function_detail', array('rows'=>10,'cols'=>100)); ?>
+</div>
 <div id="funclist">
 </div>
 
