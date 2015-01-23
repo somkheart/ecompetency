@@ -63,13 +63,14 @@ class CompetencyAssessorController extends Controller
             $tmpObjectList=CompetencyAssessor::model()->findAll('assessor_user=:assessor_user and status = 0 ',array(':assessor_user'=>$assessor_user));
             $tmpData = array();
             $b = array();
-            $index=1;
+            $index=0;
             foreach ($tmpObjectList as $tmpObject) {
                 $obj = new stdClass();
                 $usercode=$tmpObject->usercode;
                 $obj->usercode = $tmpObject->assessor_id;             
                 $userObj=User::model()->findByAttributes(array('usercode' => $usercode));
                 $obj->fullname="$userObj->firstname_th $userObj->lastname_th ";
+                $obj->index=$index++;
                 array_push($b, $obj);
             }
              echo json_encode(array("data" => $b));

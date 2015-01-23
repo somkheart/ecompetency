@@ -20,17 +20,23 @@ and open the template in the editor.
     </head>
     <body>
 
-        <div id="example">
+        <div id="example ">
             <div class="leftImage"><img src="<?php echo Yii::app()->request->baseUrl; ?>/css/styles/header.png" height="110" ></div>
             <ul id="menu" style="text-align: right;">
                 <li style="float:right;">
                     <a href="<?php echo Yii::app()->request->baseUrl; ?>/site/logout">ออกจากระบบ</a>
                 </li>
+                <li style="float:right;">
+                    <a href='<?php echo Yii::app()->request->baseUrl; ?>/user/profile'>ข้อมูลส่วนตัว</a>
+                </li>
                 <li style="float:right; width:500px;" onclick="location.href='<?php echo Yii::app()->request->baseUrl; ?>/ahd'">
                     <b>ผู้ประเมิน : </b><?php echo Yii::app()->user->getName(); ?>
                 </li>
+                
             </ul>
+           
             <?php echo $content; ?>
+     
 
     </body>
 </html>

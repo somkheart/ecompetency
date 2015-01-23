@@ -6,7 +6,7 @@ class CompetencyController extends Controller
 	{
 		$this->render('index');
 	}
-        public function actionCoreCompetencyJsonAll()
+        public function actionCoreCompetencyJsonAll($id)
 	{
           
             $position = Competency::model()->findAll();

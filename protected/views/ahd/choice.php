@@ -1,7 +1,8 @@
 <?php
+$id=$_GET['id'];
 $baseURL = Yii::app()->getBaseUrl(true);
 $user_id = Yii::app()->user->getId();
-$competency_url = "$baseURL/Competency/CoreCompetencyJsonAll";
+$competency_url = "$baseURL/Competency/CoreCompetencyJsonAll/$id";
 $competency_update = "$baseURL/ahd/save";
 $person_url = "$baseURL/CompetencyAssessor/JsonUser";
 ?>
@@ -19,9 +20,7 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
 <script>
     $(document).ready(function () {
         $("#menu").kendoMenu();
-        $("#person").change(function(){
-            
-        });
+
     });
     $("#button,#reset").kendoButton({
         enable: true
@@ -89,6 +88,7 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
             dataSource: dataSource,
             toolbar: kendo.template($("#template").html()),
             pageable: true,
+            scrollable: true,
           //  height: 550,
             columns: [
                 {field: "competency_type", title: "Competency", groupHeaderTemplate: "#if(value==1){# Core Competency #} else if(value==2) {# Managerial Competency #} else if(value==3) {# Functional Competency #}#"},
@@ -178,8 +178,10 @@ $person_url = "$baseURL/CompetencyAssessor/JsonUser";
         $("#person").kendoDropDownList({
             dataTextField: "fullname",
             dataValueField: "usercode",
+            index:"index",
             dataSource: personDataSource,
              change: function(e) {
+         
                 var value = this.value();
                  if(confirm('ยืนยันเปลี่ยนการประเมิน'))
                  window.location.href = "<?php echo Yii::app()->getBaseUrl(); ?>/ahd/choice/"+value; 

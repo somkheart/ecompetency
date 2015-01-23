@@ -5,33 +5,17 @@
 
 <div class="view">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('usercode')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->usercode), array('view', 'id'=>$data->usercode)); ?>
-	<br />
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><?php echo CHtml::encode($data->getAttributeLabel('firstname_th'))." ". CHtml::encode($data->getAttributeLabel('firstname_th'));  ?></td>
+                        <td><?php echo CHtml::encode($data->getAttributeLabel('position_code')); ?></td>
+                        <td>Saloon</td>
+                        <td>Yes</td>
+                    </tr>
+                </tbody>
+   
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('position_code')); ?>:</b>
-	<?php echo CHtml::encode($data->position_code); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('firstname_th')); ?>:</b>
-	<?php echo CHtml::encode($data->firstname_th); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('lastname_th')); ?>:</b>
-	<?php echo CHtml::encode($data->lastname_th); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('nickname')); ?>:</b>
-	<?php echo CHtml::encode($data->nickname); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('firstname_eng')); ?>:</b>
-	<?php echo CHtml::encode($data->firstname_eng); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('lastname_eng')); ?>:</b>
-	<?php echo CHtml::encode($data->lastname_eng); ?>
-	<br />
 
 	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('position_name')); ?>:</b>

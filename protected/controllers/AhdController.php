@@ -4,7 +4,7 @@ class AHDController extends CAHDController {
 
     public function actionIndex() {
         $assessor_user = Yii::app()->user->id;
-        $model = CompetencyAssessor::model()->findAll('assessor_user=:assessor_user and status=0 ',array(':assessor_user'=>$assessor_user));
+        $model = CompetencyAssessor::model()->findAll('assessor_user=:assessor_user and status=0 ', array(':assessor_user' => $assessor_user));
         $this->render('index', array('model' => $model));
     }
 
@@ -14,6 +14,7 @@ class AHDController extends CAHDController {
                 //'postOnly + delete', // we only allow deletion via POST request
         );
     }
+
     /**
      * Specifies the access control rules.
      * This method is used by the 'accessControl' filter.
@@ -30,36 +31,35 @@ class AHDController extends CAHDController {
     }
 
     public function actionChoice($id) {
-        $this->render('choice',array('id'=>$id));
+        $this->render('choice', array('id' => $id));
     }
+
     public function actionSave() {
-        $value=$_POST['value'];
-        $assessor_id=$_POST['assessor_id'];
-        $comment=$_POST['comment'];
+        $value = $_POST['value'];
+        $assessor_id = $_POST['assessor_id'];
+        $comment = $_POST['comment'];
         $assessor_user = Yii::app()->user->id;
-        $obj=CompetencyAssessor::model()->findByPk($assessor_id);
-        while (list($competency_id,$arr) = each($value)) 
-        {
-            while(list($competency_type,$item)=each($arr))
-            {
-                $tmpComment=$comment[$competency_id][$competency_type];
-                $result=new CompetencyResult();
-                $result->topic_id=1;
-                $result->competency_id=$competency_id;
-                $result->competency_type=$competency_type;
-                $result->usercode=$obj->usercode;
-                $result->assessor_user=$assessor_user;
-                $result->score=$item;
-                $result->comment=$tmpComment;
+        $obj = CompetencyAssessor::model()->findByPk($assessor_id);
+        while (list($competency_id, $arr) = each($value)) {
+            while (list($competency_type, $item) = each($arr)) {
+                $tmpComment = $comment[$competency_id][$competency_type];
+                $result = new CompetencyResult();
+                $result->topic_id = 1;
+                $result->competency_id = $competency_id;
+                $result->competency_type = $competency_type;
+                $result->usercode = $obj->usercode;
+                $result->assessor_user = $assessor_user;
+                $result->score = $item;
+                $result->comment = $tmpComment;
                 $result->save();
-                      //    echo "Competency ID = $competency_id , competency_type = $competency_type , score = $item <br>";
+                //    echo "Competency ID = $competency_id , competency_type = $competency_type , score = $item <br>";
             }
         }
-        $obj->status=1;
+        $obj->status = 1;
         $obj->save();
         $this->render('save');
-
     }
+
     // Uncomment the following methods and override them if needed
     /*
       public function filters()
